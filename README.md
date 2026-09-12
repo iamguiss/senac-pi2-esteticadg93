@@ -37,3 +37,7 @@ Clientes da Estética DG93 e o responsável pelo gerenciamento dos atendimento
 3. Coloque o projeto na pasta `htdocs`.
 4. Crie o banco de dados utilizando o arquivo `database/database.sql`.
 5. Acesse o projeto pelo navegador através do `localhost`.
+
+## Documentação
+- [Banco de Dados](docs/BANCO_DE_DADOS.md)
+- [Troca de Feedback entre Projetos](docs/project-exchange.md)
