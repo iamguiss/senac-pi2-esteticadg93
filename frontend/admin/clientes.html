@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Clientes — Administração | DG93</title>
+
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+
+            <div class="sidebar-logo">
+                Estética DG93
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html">
+                    Visão geral
+                </a>
+
+                <a href="agendamentos.html">
+                    Agendamentos
+                </a>
+
+                <a href="clientes.html">
+                    Clientes
+                </a>
+
+                <a href="servicos.html">
+                    Serviços
+                </a>
+
+            </nav>
+
+            <div class="sidebar-user">
+
+                <span>GP</span>
+
+                <div>
+                    <strong>Guilherme Prado</strong>
+                    <small>Administrador</small>
+                </div>
+
+                <a href="../login.html">
+                    Sair
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="app-main">
+
+            <!-- Topbar -->
+            <header class="app-topbar">
+
+                <span>
+                    ADMINISTRAÇÃO
+                </span>
+
+            </header>
+
+            <main class="app-content">
+
+                <!-- Cabeçalho da página -->
+                <section>
+
+                    <div>
+                        <h1>Clientes</h1>
+
+                        <p>
+                            Consulte os clientes cadastrados no sistema.
+                        </p>
+                    </div>
+
+                    <!-- Busca -->
+                    <div class="field">
+
+                        <label for="busca-cliente">
+                            Buscar cliente
+                        </label>
+
+                        <input
+                            type="search"
+                            id="busca-cliente"
+                            placeholder="Buscar por nome ou e-mail"
+                        >
+
+                    </div>
+
+                </section>
+
+                <!-- Lista de clientes -->
+                <section>
+
+                    <h2>Clientes cadastrados</h2>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Nome</th>
+                                    <th>E-mail</th>
+                                    <th>CPF</th>
+                                    <th>Agendamentos</th>
+                                    <th>Ações</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        Guilherme Silva
+                                    </td>
+
+                                    <td>
+                                        cliente@email.com
+                                    </td>
+
+                                    <td>
+                                        123.456.789-00
+                                    </td>
+
+                                    <td>
+                                        3
+                                    </td>
+
+                                    <td>
+                                        <a href="agendamentos.html">
+                                            Ver agendamentos
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        João Santos
+                                    </td>
+
+                                    <td>
+                                        joao@email.com
+                                    </td>
+
+                                    <td>
+                                        987.654.321-00
+                                    </td>
+
+                                    <td>
+                                        1
+                                    </td>
+
+                                    <td>
+                                        <a href="agendamentos.html">
+                                            Ver agendamentos
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+                <!-- Estado vazio -->
+                <section>
+
+                    <h2>
+                        Nenhum cliente encontrado
+                    </h2>
+
+                    <p>
+                        Tente buscar por outro nome ou e-mail.
+                    </p>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

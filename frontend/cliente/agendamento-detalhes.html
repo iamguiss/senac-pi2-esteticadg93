@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalhes do agendamento — Área do cliente | DG93</title>
+</head>
+
+<body>
+
+    <!-- Área do cliente -->
+    <div class="app-shell">
+
+        <!-- Menu lateral -->
+        <aside id="dg93-sidebar">
+
+            <div>
+                <span>Estética DG93</span>
+            </div>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="agendar.html">Agendar serviço</a>
+                <a href="agendamentos.html">Meus agendamentos</a>
+                <a href="perfil.html">Meu perfil</a>
+            </nav>
+
+            <div>
+                <span>Cliente</span>
+                <a href="../login.html">Sair</a>
+            </div>
+
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="app-main">
+
+            <!-- Barra superior -->
+            <header id="dg93-topbar">
+                <span>Área do cliente</span>
+            </header>
+
+            <main>
+
+                <a href="agendamentos.html">
+                    Voltar para meus agendamentos
+                </a>
+
+                <!-- Detalhes -->
+                <section id="conteudo">
+
+                    <div>
+
+                        <h1>
+                            Lavagem Completa
+                        </h1>
+
+                        <span>
+                            Aprovado
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <div>
+                            <span>Valor</span>
+                            <strong>R$ 90,00</strong>
+                        </div>
+
+                        <div>
+                            <span>Data</span>
+                            <strong>Data do agendamento</strong>
+                        </div>
+
+                        <div>
+                            <span>Horário</span>
+                            <strong>Horário do agendamento</strong>
+                        </div>
+
+                        <div>
+                            <span>Local</span>
+                            <strong>Local do atendimento</strong>
+                        </div>
+
+                        <div>
+                            <span>Categoria</span>
+                            <strong>Lavagem</strong>
+                        </div>
+
+                    </div>
+
+                    <!-- Informações adicionais -->
+                    <div>
+
+                        <p>
+                            Reagendamento solicitado para
+                            <strong>data e horário</strong>.
+                            Aguardando análise da equipe DG93.
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Este agendamento foi negado pela equipe DG93.
+                            Entre em contato para mais informações.
+                        </p>
+
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Este agendamento foi cancelado.
+                        </p>
+
+                    </div>
+
+                    <!-- Ações -->
+                    <div>
+
+                        <button type="button" id="btn-reagendar">
+                            Solicitar reagendamento
+                        </button>
+
+                        <button type="button" id="btn-cancelar">
+                            Cancelar agendamento
+                        </button>
+
+                    </div>
+
+                </section>
+
+                <!-- Agendamento não encontrado -->
+                <section id="nao-encontrado" hidden>
+
+                    <h2>
+                        Agendamento não encontrado
+                    </h2>
+
+                    <p>
+                        Ele pode ter sido removido dos dados de demonstração.
+                    </p>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+    <!-- Modal: cancelar -->
+    <div id="modal-cancelar">
+
+        <div>
+
+            <header>
+                <h2>Cancelar agendamento</h2>
+
+                <button
+                    type="button"
+                    aria-label="Fechar"
+                >
+                    ×
+                </button>
+            </header>
+
+            <p>
+                Tem certeza que deseja cancelar este agendamento?
+                Essa ação não pode ser desfeita.
+            </p>
+
+            <div>
+
+                <button type="button">
+                    Voltar
+                </button>
+
+                <button type="button" id="confirmar-cancelamento">
+                    Sim, cancelar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- Modal: reagendamento -->
+    <div id="modal-reagendar">
+
+        <div>
+
+            <header>
+
+                <h2>
+                    Solicitar reagendamento
+                </h2>
+
+                <button
+                    type="button"
+                    aria-label="Fechar"
+                >
+                    ×
+                </button>
+
+            </header>
+
+            <form id="form-reagendar">
+
+                <div>
+
+                    <label for="reagenda-data">
+                        Nova data desejada
+                    </label>
+
+                    <input
+                        type="date"
+                        id="reagenda-data"
+                        name="data"
+                        required
+                    >
+
+                </div>
+
+                <div>
+
+                    <label for="reagenda-hora">
+                        Novo horário desejado
+                    </label>
+
+                    <select
+                        id="reagenda-hora"
+                        name="hora"
+                        required
+                    >
+
+                        <option value="">
+                            Selecione
+                        </option>
+
+                        <option value="08:00">
+                            08:00
+                        </option>
+
+                        <option value="09:00">
+                            09:00
+                        </option>
+
+                        <option value="10:30">
+                            10:30
+                        </option>
+
+                        <option value="13:00">
+                            13:00
+                        </option>
+
+                        <option value="14:00">
+                            14:00
+                        </option>
+
+                        <option value="15:30">
+                            15:30
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div>
+
+                    <label for="reagenda-motivo">
+                        Motivo (opcional)
+                    </label>
+
+                    <textarea
+                        id="reagenda-motivo"
+                        name="motivo"
+                        rows="3"
+                        placeholder="Explique o motivo do reagendamento"
+                    ></textarea>
+
+                </div>
+
+                <div>
+
+                    <button type="button">
+                        Cancelar
+                    </button>
+
+                    <button type="submit">
+                        Enviar solicitação
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendar serviço — Área do cliente | DG93</title>
+</head>
+
+<body>
+
+    <!-- Área do cliente -->
+    <div class="app-shell">
+
+        <!-- Menu lateral -->
+        <aside id="dg93-sidebar">
+
+            <div>
+                <span>Estética DG93</span>
+            </div>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="agendar.html">Agendar serviço</a>
+                <a href="agendamentos.html">Meus agendamentos</a>
+                <a href="perfil.html">Meu perfil</a>
+            </nav>
+
+            <div>
+                <span>Cliente</span>
+                <a href="../login.html">Sair</a>
+            </div>
+
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="app-main">
+
+            <!-- Barra superior -->
+            <header id="dg93-topbar">
+                <span>Área do cliente</span>
+            </header>
+
+            <main>
+
+                <h1>Agendar serviço</h1>
+
+                <p>
+                    Siga os passos abaixo para solicitar um novo atendimento.
+                </p>
+
+                <!-- Indicador dos passos -->
+                <div id="steps-indicator">
+
+                    <div>
+                        <span>1</span>
+                        Serviço
+                    </div>
+
+                    <div>
+                        <span>2</span>
+                        Data e local
+                    </div>
+
+                    <div>
+                        <span>3</span>
+                        Revisão
+                    </div>
+
+                </div>
+
+                <!-- Passo 1 -->
+                <section data-step="1">
+
+                    <h2>1. Escolha o serviço</h2>
+
+                    <div id="lista-servicos-pick">
+
+                        <article>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="servico"
+                                    value="1"
+                                >
+
+                                <span>
+                                    <strong>Lavagem Completa</strong>
+                                    <small>Lavagem</small>
+                                </span>
+
+                                <strong>R$ 90,00</strong>
+                            </label>
+                        </article>
+
+                        <article>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="servico"
+                                    value="2"
+                                >
+
+                                <span>
+                                    <strong>Higienização Interna</strong>
+                                    <small>Higienização</small>
+                                </span>
+
+                                <strong>R$ 220,00</strong>
+                            </label>
+                        </article>
+
+                        <article>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="servico"
+                                    value="3"
+                                >
+
+                                <span>
+                                    <strong>Polimento</strong>
+                                    <small>Estética</small>
+                                </span>
+
+                                <strong>R$ 350,00</strong>
+                            </label>
+                        </article>
+
+                        <article>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="servico"
+                                    value="4"
+                                >
+
+                                <span>
+                                    <strong>Enceramento</strong>
+                                    <small>Estética</small>
+                                </span>
+
+                                <strong>R$ 150,00</strong>
+                            </label>
+                        </article>
+
+                        <article>
+                            <label>
+                                <input
+                                    type="radio"
+                                    name="servico"
+                                    value="5"
+                                >
+
+                                <span>
+                                    <strong>Higienização de Estofados (Sofá)</strong>
+                                    <small>Higienização</small>
+                                </span>
+
+                                <strong>R$ 180,00</strong>
+                            </label>
+                        </article>
+
+                    </div>
+
+                    <p id="erro-servico">
+                        Selecione um serviço para continuar.
+                    </p>
+
+                </section>
+
+                <!-- Passo 2 -->
+                <section data-step="2">
+
+                    <h2>2. Data, horário e local</h2>
+
+                    <div>
+
+                        <label for="input-data">
+                            Data desejada
+                        </label>
+
+                        <input
+                            type="date"
+                            id="input-data"
+                            name="data"
+                        >
+
+                        <span>
+                            Escolha uma data a partir de amanhã.
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <label for="input-hora">
+                            Horário desejado
+                        </label>
+
+                        <select id="input-hora" name="hora">
+
+                            <option value="">
+                                Selecione um horário
+                            </option>
+
+                            <option value="08:00">
+                                08:00
+                            </option>
+
+                            <option value="09:00">
+                                09:00
+                            </option>
+
+                            <option value="10:30">
+                                10:30
+                            </option>
+
+                            <option value="13:00">
+                                13:00
+                            </option>
+
+                            <option value="14:00">
+                                14:00
+                            </option>
+
+                            <option value="15:30">
+                                15:30
+                            </option>
+
+                        </select>
+
+                        <span>
+                            Selecione um horário.
+                        </span>
+
+                    </div>
+
+                    <div>
+
+                        <label for="input-local">
+                            Local do atendimento
+                        </label>
+
+                        <input
+                            type="text"
+                            id="input-local"
+                            name="local"
+                            placeholder="Endereço ou Estética DG93 — Unidade Central"
+                        >
+
+                        <span>
+                            O atendimento pode ser feito na unidade da DG93
+                            ou no endereço informado, dependendo do serviço.
+                        </span>
+
+                        <span>
+                            Informe o local do atendimento.
+                        </span>
+
+                    </div>
+
+                </section>
+
+                <!-- Passo 3 -->
+                <section data-step="3">
+
+                    <h2>3. Revise e envie</h2>
+
+                    <div id="resumo-agendamento">
+
+                        <div>
+                            <span>Serviço</span>
+                            <strong>Serviço selecionado</strong>
+                        </div>
+
+                        <div>
+                            <span>Valor</span>
+                            <strong>R$ 0,00</strong>
+                        </div>
+
+                        <div>
+                            <span>Data</span>
+                            <strong>Data selecionada</strong>
+                        </div>
+
+                        <div>
+                            <span>Horário</span>
+                            <strong>Horário selecionado</strong>
+                        </div>
+
+                        <div>
+                            <span>Local</span>
+                            <strong>Local informado</strong>
+                        </div>
+
+                    </div>
+
+                    <div>
+
+                        <p>
+                            Ao enviar, seu agendamento ficará com o status
+                            <strong>Aguardando confirmação</strong>
+                            até que a equipe DG93 aprove o horário.
+                        </p>
+
+                    </div>
+
+                </section>
+
+                <!-- Navegação -->
+                <div>
+
+                    <button
+                        type="button"
+                        id="btn-voltar"
+                        hidden
+                    >
+                        Voltar
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btn-avancar"
+                    >
+                        Continuar
+                    </button>
+
+                    <button
+                        type="button"
+                        id="btn-enviar"
+                        hidden
+                    >
+                        Enviar solicitação
+                    </button>
+
+                </div>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

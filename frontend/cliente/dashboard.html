@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — Área do cliente | DG93</title>
+</head>
+
+<body>
+
+    <!-- Área do cliente -->
+    <div class="app-shell">
+
+        <!-- Menu lateral -->
+        <aside id="dg93-sidebar">
+
+            <div>
+                <span>Estética DG93</span>
+            </div>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="agendar.html">Agendar serviço</a>
+                <a href="agendamentos.html">Meus agendamentos</a>
+                <a href="perfil.html">Meu perfil</a>
+            </nav>
+
+            <div>
+                <span>Cliente</span>
+                <a href="../login.html">Sair</a>
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="app-main">
+
+            <!-- Barra superior -->
+            <header id="dg93-topbar">
+
+                <span>Área do cliente</span>
+
+            </header>
+
+            <main id="conteudo">
+
+                <!-- Cabeçalho -->
+                <section>
+
+                    <div>
+                        <h1 id="saudacao">
+                            Olá, cliente
+                        </h1>
+
+                        <p>
+                            Aqui está um resumo dos seus agendamentos.
+                        </p>
+                    </div>
+
+                    <a href="agendar.html">
+                        Novo agendamento
+                    </a>
+
+                </section>
+
+                <!-- Estatísticas -->
+                <section>
+
+                    <div>
+
+                        <article>
+                            <span>Total de agendamentos</span>
+                            <strong id="stat-total">0</strong>
+                        </article>
+
+                        <article>
+                            <span>Aguardando confirmação</span>
+                            <strong id="stat-aguardando">0</strong>
+                        </article>
+
+                        <article>
+                            <span>Em andamento</span>
+                            <strong id="stat-andamento">0</strong>
+                        </article>
+
+                        <article>
+                            <span>Concluídos</span>
+                            <strong id="stat-concluido">0</strong>
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- Próximos agendamentos -->
+                <section>
+
+                    <div>
+
+                        <h2>
+                            Próximos agendamentos
+                        </h2>
+
+                        <a href="agendamentos.html">
+                            Ver todos
+                        </a>
+
+                    </div>
+
+                    <div id="lista-proximos">
+
+                        <!-- Agendamento -->
+                        <article>
+
+                            <div>
+
+                                <h3>
+                                    Serviço
+                                </h3>
+
+                                <span>
+                                    Status
+                                </span>
+
+                            </div>
+
+                            <div>
+
+                                <p>
+                                    <strong>Data:</strong>
+                                    Data e horário
+                                </p>
+
+                                <p>
+                                    <strong>Local:</strong>
+                                    Local do atendimento
+                                </p>
+
+                                <p>
+                                    <strong>Valor:</strong>
+                                    R$ 0,00
+                                </p>
+
+                            </div>
+
+                            <div>
+                                <a href="agendamento-detalhes.html">
+                                    Ver detalhes
+                                </a>
+                            </div>
+
+                        </article>
+
+                    </div>
+
+                    <!-- Estado vazio -->
+                    <div id="vazio-proximos" hidden>
+
+                        <h3>
+                            Nenhum agendamento em aberto
+                        </h3>
+
+                        <p>
+                            Que tal agendar seu próximo serviço?
+                        </p>
+
+                        <a href="agendar.html">
+                            Agendar serviço
+                        </a>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

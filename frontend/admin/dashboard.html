@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard — Administração | DG93</title>
+
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
+</head>
+
+<body>
+
+    <div class="app-shell">
+
+        <!-- Sidebar -->
+        <aside class="app-sidebar">
+
+            <div class="sidebar-logo">
+                Estética DG93
+            </div>
+
+            <nav class="sidebar-nav">
+
+                <a href="dashboard.html">
+                    Visão geral
+                </a>
+
+                <a href="agendamentos.html">
+                    Agendamentos
+                </a>
+
+                <a href="clientes.html">
+                    Clientes
+                </a>
+
+                <a href="servicos.html">
+                    Serviços
+                </a>
+
+            </nav>
+
+            <div class="sidebar-user">
+
+                <span>GP</span>
+
+                <div>
+                    <strong>Guilherme Prado</strong>
+                    <small>Administrador</small>
+                </div>
+
+                <a href="../login.html">
+                    Sair
+                </a>
+
+            </div>
+
+        </aside>
+
+        <!-- Área principal -->
+        <div class="app-main">
+
+            <!-- Topbar -->
+            <header class="app-topbar">
+
+                <span>
+                    ADMINISTRAÇÃO
+                </span>
+
+            </header>
+
+            <main class="app-content">
+
+                <!-- Cabeçalho -->
+                <section>
+
+                    <h1>Visão geral</h1>
+
+                    <p>
+                        Panorama dos atendimentos da Estética DG93.
+                    </p>
+
+                </section>
+
+                <!-- Indicadores -->
+                <section>
+
+                    <h2>Resumo</h2>
+
+                    <div class="grid-stats">
+
+                        <article class="card stat-card">
+
+                            <span>
+                                Agendamentos no total
+                            </span>
+
+                            <strong>
+                                8
+                            </strong>
+
+                        </article>
+
+                        <article class="card stat-card">
+
+                            <span>
+                                Pendentes de aprovação
+                            </span>
+
+                            <strong>
+                                2
+                            </strong>
+
+                        </article>
+
+                        <article class="card stat-card">
+
+                            <span>
+                                Em andamento
+                            </span>
+
+                            <strong>
+                                1
+                            </strong>
+
+                        </article>
+
+                        <article class="card stat-card">
+
+                            <span>
+                                Clientes cadastrados
+                            </span>
+
+                            <strong>
+                                4
+                            </strong>
+
+                        </article>
+
+                    </div>
+
+                </section>
+
+                <!-- Agendamentos pendentes -->
+                <section>
+
+                    <div class="row-between">
+
+                        <h2>
+                            Agendamentos aguardando aprovação
+                        </h2>
+
+                        <a href="agendamentos.html">
+                            Ver todos
+                        </a>
+
+                    </div>
+
+                    <div class="table-wrap">
+
+                        <table>
+
+                            <thead>
+
+                                <tr>
+                                    <th>Cliente</th>
+                                    <th>Serviço</th>
+                                    <th>Data</th>
+                                    <th>Local</th>
+                                    <th>Status</th>
+                                    <th>Ações</th>
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+
+                                <tr>
+
+                                    <td>
+                                        Guilherme Silva
+                                    </td>
+
+                                    <td>
+                                        Lavagem Completa
+                                    </td>
+
+                                    <td>
+                                        25/09/2026 · 10:00
+                                    </td>
+
+                                    <td>
+                                        Endereço do atendimento
+                                    </td>
+
+                                    <td>
+                                        Aguardando confirmação
+                                    </td>
+
+                                    <td>
+                                        <a href="agendamento-detalhes.html">
+                                            Analisar
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                                <tr>
+
+                                    <td>
+                                        João Santos
+                                    </td>
+
+                                    <td>
+                                        Higienização Interna
+                                    </td>
+
+                                    <td>
+                                        26/09/2026 · 14:00
+                                    </td>
+
+                                    <td>
+                                        Endereço do atendimento
+                                    </td>
+
+                                    <td>
+                                        Aguardando confirmação
+                                    </td>
+
+                                    <td>
+                                        <a href="agendamento-detalhes.html">
+                                            Analisar
+                                        </a>
+                                    </td>
+
+                                </tr>
+
+                            </tbody>
+
+                        </table>
+
+                    </div>
+
+                </section>
+
+                <!-- Estado vazio -->
+                <section>
+
+                    <h2>
+                        Nenhum agendamento pendente
+                    </h2>
+
+                    <p>
+                        Todos os agendamentos foram analisados.
+                    </p>
+
+                </section>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

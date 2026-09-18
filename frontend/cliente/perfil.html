@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu perfil — Área do cliente | DG93</title>
+</head>
+
+<body>
+
+    <!-- Área do cliente -->
+    <div class="app-shell">
+
+        <!-- Menu lateral -->
+        <aside id="dg93-sidebar">
+
+            <div>
+                <span>Estética DG93</span>
+            </div>
+
+            <nav>
+                <a href="dashboard.html">Dashboard</a>
+                <a href="agendar.html">Agendar serviço</a>
+                <a href="agendamentos.html">Meus agendamentos</a>
+                <a href="perfil.html">Meu perfil</a>
+            </nav>
+
+            <div>
+                <span>Cliente</span>
+                <a href="../login.html">Sair</a>
+            </div>
+
+        </aside>
+
+        <!-- Conteúdo principal -->
+        <div class="app-main">
+
+            <!-- Barra superior -->
+            <header id="dg93-topbar">
+
+                <span>Área do cliente</span>
+
+            </header>
+
+            <main>
+
+                <h1>Meu perfil</h1>
+
+                <p>
+                    Seus dados cadastrais na Estética DG93.
+                </p>
+
+                <!-- Formulário de perfil -->
+                <form id="form-perfil">
+
+                    <div>
+                        <label for="nome">
+                            Nome completo
+                        </label>
+
+                        <input
+                            type="text"
+                            id="nome"
+                            name="nome"
+                            required
+                        >
+
+                        <span>
+                            Informe seu nome completo.
+                        </span>
+                    </div>
+
+                    <div>
+                        <label for="email">
+                            E-mail
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            name="email"
+                            required
+                        >
+
+                        <span>
+                            Informe um e-mail válido.
+                        </span>
+                    </div>
+
+                    <div>
+                        <label for="cpf">
+                            CPF
+                        </label>
+
+                        <input
+                            type="text"
+                            id="cpf"
+                            name="cpf"
+                            disabled
+                        >
+
+                        <span>
+                            O CPF não pode ser alterado.
+                        </span>
+                    </div>
+
+                    <div>
+                        <label for="sexo">
+                            Sexo
+                        </label>
+
+                        <select id="sexo" name="sexo">
+
+                            <option value="Feminino">
+                                Feminino
+                            </option>
+
+                            <option value="Masculino">
+                                Masculino
+                            </option>
+
+                            <option value="Prefiro não informar">
+                                Prefiro não informar
+                            </option>
+
+                        </select>
+                    </div>
+
+                    <div>
+
+                        <span>
+                            Perfil:
+                            <strong id="tipo-perfil">
+                                Cliente
+                            </strong>
+                        </span>
+
+                        <button type="submit" id="btn-salvar">
+                            Salvar alterações
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </main>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
