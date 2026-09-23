@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Serviços — Administração | DG93</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/variables.css">
     <link rel="stylesheet" href="../assets/css/base.css">
     <link rel="stylesheet" href="../assets/css/components.css">
@@ -14,404 +15,73 @@
 <body>
 
     <div class="app-shell">
+        <aside id="dg93-sidebar" class="app-sidebar"></aside>
 
-        <!-- Sidebar -->
-        <aside class="app-sidebar">
-
-            <div class="sidebar-logo">
-                Estética DG93
-            </div>
-
-            <nav class="sidebar-nav">
-
-                <a href="dashboard.html">
-                    Visão geral
-                </a>
-
-                <a href="agendamentos.html">
-                    Agendamentos
-                </a>
-
-                <a href="clientes.html">
-                    Clientes
-                </a>
-
-                <a href="servicos.html">
-                    Serviços
-                </a>
-
-            </nav>
-
-            <div class="sidebar-user">
-
-                <span>GP</span>
-
-                <div>
-                    <strong>Guilherme Prado</strong>
-                    <small>Administrador</small>
-                </div>
-
-                <a href="../login.html">
-                    Sair
-                </a>
-
-            </div>
-
-        </aside>
-
-        <!-- Área principal -->
         <div class="app-main">
-
-            <!-- Topbar -->
-            <header class="app-topbar">
-
-                <span>
-                    ADMINISTRAÇÃO
-                </span>
-
-            </header>
+            <header id="dg93-topbar" class="app-topbar"></header>
 
             <main class="app-content">
-
-                <!-- Cabeçalho -->
-                <section>
-
-                    <div>
-
-                        <h1>Serviços</h1>
-
-                        <p>
-                            Gerencie os serviços oferecidos pela Estética DG93.
-                        </p>
-
-                    </div>
-
-                    <button type="button">
-                        Novo serviço
-                    </button>
-
-                </section>
-
-                <!-- Lista de serviços -->
-                <section>
-
-                    <h2>Serviços cadastrados</h2>
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>Serviço</th>
-                                    <th>Categoria</th>
-                                    <th>Preço</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <tr>
-
-                                    <td>
-                                        Lavagem Completa
-                                    </td>
-
-                                    <td>
-                                        Lavagem
-                                    </td>
-
-                                    <td>
-                                        R$ 90,00
-                                    </td>
-
-                                    <td>
-                                        Ativo
-                                    </td>
-
-                                    <td>
-
-                                        <button type="button">
-                                            Editar
-                                        </button>
-
-                                        <button type="button">
-                                            Desativar
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        Higienização Interna
-                                    </td>
-
-                                    <td>
-                                        Higienização
-                                    </td>
-
-                                    <td>
-                                        R$ 220,00
-                                    </td>
-
-                                    <td>
-                                        Ativo
-                                    </td>
-
-                                    <td>
-
-                                        <button type="button">
-                                            Editar
-                                        </button>
-
-                                        <button type="button">
-                                            Desativar
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        Polimento
-                                    </td>
-
-                                    <td>
-                                        Estética
-                                    </td>
-
-                                    <td>
-                                        R$ 350,00
-                                    </td>
-
-                                    <td>
-                                        Ativo
-                                    </td>
-
-                                    <td>
-
-                                        <button type="button">
-                                            Editar
-                                        </button>
-
-                                        <button type="button">
-                                            Desativar
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        Enceramento
-                                    </td>
-
-                                    <td>
-                                        Estética
-                                    </td>
-
-                                    <td>
-                                        R$ 150,00
-                                    </td>
-
-                                    <td>
-                                        Ativo
-                                    </td>
-
-                                    <td>
-
-                                        <button type="button">
-                                            Editar
-                                        </button>
-
-                                        <button type="button">
-                                            Desativar
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        Higienização de Estofados (Sofá)
-                                    </td>
-
-                                    <td>
-                                        Higienização
-                                    </td>
-
-                                    <td>
-                                        R$ 180,00
-                                    </td>
-
-                                    <td>
-                                        Ativo
-                                    </td>
-
-                                    <td>
-
-                                        <button type="button">
-                                            Editar
-                                        </button>
-
-                                        <button type="button">
-                                            Desativar
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>
-                                        Lavagem de Moto
-                                    </td>
-
-                                    <td>
-                                        Lavagem
-                                    </td>
-
-                                    <td>
-                                        R$ 60,00
-                                    </td>
-
-                                    <td>
-                                        Inativo
-                                    </td>
-
-                                    <td>
-
-                                        <button type="button">
-                                            Editar
-                                        </button>
-
-                                        <button type="button">
-                                            Ativar
-                                        </button>
-
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </section>
-
-                <!-- Modal / formulário de serviço -->
-                <section>
-
-                    <h2>Novo serviço</h2>
-
-                    <form>
-
-                        <div class="field">
-
-                            <label for="servico-nome">
-                                Nome do serviço
-                            </label>
-
-                            <input
-                                type="text"
-                                id="servico-nome"
-                                placeholder="Nome do serviço"
-                            >
-
-                        </div>
-
-                        <div class="field">
-
-                            <label for="servico-categoria">
-                                Categoria
-                            </label>
-
-                            <input
-                                type="text"
-                                id="servico-categoria"
-                                placeholder="Ex.: Lavagem, Estética, Higienização"
-                            >
-
-                        </div>
-
-                        <div class="field">
-
-                            <label for="servico-preco">
-                                Preço (R$)
-                            </label>
-
-                            <input
-                                type="number"
-                                id="servico-preco"
-                                placeholder="0,00"
-                            >
-
-                        </div>
-
-                        <div class="field">
-
-                            <label for="servico-descricao">
-                                Descrição
-                            </label>
-
-                            <textarea
-                                id="servico-descricao"
-                                rows="4"
-                                placeholder="Descrição do serviço"
-                            ></textarea>
-
-                        </div>
-
-                        <div>
-
-                            <input
-                                type="checkbox"
-                                id="servico-ativo"
-                            >
-
-                            <label for="servico-ativo">
-                                Serviço ativo (visível para clientes)
-                            </label>
-
-                        </div>
-
-                        <div>
-
-                            <button type="button">
-                                Cancelar
-                            </button>
-
-                            <button type="submit">
-                                Salvar serviço
-                            </button>
-
-                        </div>
-
-                    </form>
-
-                </section>
-
+                <div class="row-between" style="margin-bottom: var(--space-5);">
+                    <h2>Serviços</h2>
+                    <button class="btn btn-primary" id="btn-novo-servico">Novo serviço</button>
+                </div>
+
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Serviço</th>
+                                <th>Categoria</th>
+                                <th>Preço</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-servicos"></tbody>
+                    </table>
+                </div>
             </main>
-
         </div>
+    </div>
 
+    <!-- Modal: criar/editar serviço -->
+    <div class="modal-overlay" id="modal-servico">
+        <div class="modal">
+            <div class="modal__head">
+                <h3 id="modal-servico-titulo">Novo serviço</h3>
+                <button class="modal__close" data-modal-close aria-label="Fechar">×</button>
+            </div>
+            <form id="form-servico">
+                <input type="hidden" id="servico-id">
+                <div class="field">
+                    <label for="servico-nome">Nome do serviço</label>
+                    <input type="text" id="servico-nome" class="input" required>
+                </div>
+                <div class="field">
+                    <label for="servico-categoria">Categoria</label>
+                    <input type="text" id="servico-categoria" class="input"
+                        placeholder="Ex.: Lavagem, Estética, Higienização" required>
+                </div>
+                <div class="field">
+                    <label for="servico-preco">Preço (R$)</label>
+                    <input type="number" id="servico-preco" class="input" min="0" step="0.01" required>
+                </div>
+                <div class="field">
+                    <label for="servico-descricao">Descrição</label>
+                    <textarea id="servico-descricao" class="input" rows="3" required></textarea>
+                </div>
+                <div class="checkbox-row">
+                    <input type="checkbox" id="servico-ativo">
+                    <label for="servico-ativo" style="font-weight:500;">Serviço ativo (visível para clientes)</label>
+                </div>
+                <div class="modal__actions">
+                    <button type="button" class="btn btn-ghost" data-modal-close>Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar serviço</button>
+                </div>
+            </form>
+        </div>
     </div>
 
 </body>
+
 </html>

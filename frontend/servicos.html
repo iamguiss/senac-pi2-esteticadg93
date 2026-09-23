@@ -5,12 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serviços e valores — Estética DG93</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
 </head>
 
 <body>
 
+
     <!-- Header -->
-    <header id="dg93-navbar">
+    <header id="dg93-navbar" class="navbar"></header>
+
+    <!-- <header id="dg93-navbar">
 
         <div>
             <span>Estética DG93</span>
@@ -24,198 +32,43 @@
             </nav>
         </div>
 
-    </header>
+    </header> -->
 
     <main>
-
-        <!-- Título da página -->
-        <section>
-
-            <div>
-                <h1>Serviços e valores</h1>
-
-                <p>
-                    Preços fixos e transparentes.
-                    Escolha um serviço para iniciar o agendamento.
-                </p>
+        <section style="background: var(--dg-black); color: var(--dg-white); padding: var(--space-7) 0;">
+            <div class="container">
+                <h1 style="color:#fff; font-size: var(--fs-h2);">Serviços e valores</h1>
+                <p style="color: var(--dg-metal); margin-top: var(--space-2);">Preços fixos e transparentes. Escolha um
+                    serviço para iniciar o agendamento.</p>
             </div>
-
         </section>
 
-        <!-- Filtro -->
-        <section>
-
-            <div>
-
-                <div>
-                    <label for="filtro-categoria">
-                        Filtrar por categoria
-                    </label>
-
-                    <select id="filtro-categoria">
+        <section class="container" style="padding: var(--space-6) var(--space-5) var(--space-8);">
+            <div class="row-between" style="margin-bottom: var(--space-5);">
+                <div class="field" style="margin:0; min-width:220px;">
+                    <label for="filtro-categoria">Filtrar por categoria</label>
+                    <select id="filtro-categoria" class="select">
                         <option value="">Todas as categorias</option>
                     </select>
                 </div>
-
             </div>
 
-            <!-- Lista de serviços -->
-            <div id="dg93-lista-servicos">
-
-                <!-- Serviço 1 -->
-                <article>
-
-                    <div>
-                        Foto do serviço
-                    </div>
-
-                    <div>
-                        <span>Lavagem</span>
-
-                        <h2>Lavagem Completa</h2>
-
-                        <p>
-                            Lavagem completa do veículo.
-                        </p>
-
-                        <strong>R$ 90,00</strong>
-                    </div>
-
-                    <div>
-                        <a href="cadastro.html">
-                            Agendar este serviço
-                        </a>
-                    </div>
-
-                </article>
-
-                <!-- Serviço 2 -->
-                <article>
-
-                    <div>
-                        Foto do serviço
-                    </div>
-
-                    <div>
-                        <span>Higienização</span>
-
-                        <h2>Higienização Interna</h2>
-
-                        <p>
-                            Higienização completa da parte interna.
-                        </p>
-
-                        <strong>R$ 220,00</strong>
-                    </div>
-
-                    <div>
-                        <a href="cadastro.html">
-                            Agendar este serviço
-                        </a>
-                    </div>
-
-                </article>
-
-                <!-- Serviço 3 -->
-                <article>
-
-                    <div>
-                        Foto do serviço
-                    </div>
-
-                    <div>
-                        <span>Estética</span>
-
-                        <h2>Polimento</h2>
-
-                        <p>
-                            Polimento para recuperação do brilho.
-                        </p>
-
-                        <strong>R$ 350,00</strong>
-                    </div>
-
-                    <div>
-                        <a href="cadastro.html">
-                            Agendar este serviço
-                        </a>
-                    </div>
-
-                </article>
-
-                <!-- Serviço 4 -->
-                <article>
-
-                    <div>
-                        Foto do serviço
-                    </div>
-
-                    <div>
-                        <span>Estética</span>
-
-                        <h2>Enceramento</h2>
-
-                        <p>
-                            Proteção e brilho para a pintura.
-                        </p>
-
-                        <strong>R$ 150,00</strong>
-                    </div>
-
-                    <div>
-                        <a href="cadastro.html">
-                            Agendar este serviço
-                        </a>
-                    </div>
-
-                </article>
-
-                <!-- Serviço 5 -->
-                <article>
-
-                    <div>
-                        Foto do serviço
-                    </div>
-
-                    <div>
-                        <span>Higienização</span>
-
-                        <h2>Higienização de Estofados (Sofá)</h2>
-
-                        <p>
-                            Higienização de estofados.
-                        </p>
-
-                        <strong>R$ 180,00</strong>
-                    </div>
-
-                    <div>
-                        <a href="cadastro.html">
-                            Agendar este serviço
-                        </a>
-                    </div>
-
-                </article>
-
+            <div class="grid-services" id="dg93-lista-servicos">
+                <!-- injetado via JS -->
             </div>
 
-            <!-- Estado vazio -->
-            <div id="dg93-servicos-vazio" hidden>
-
-                <h2>Nenhum serviço encontrado</h2>
-
-                <p>
-                    Tente selecionar outra categoria.
-                </p>
-
+            <div class="empty-state" id="dg93-servicos-vazio" hidden>
+                <h3>Nenhum serviço encontrado</h3>
+                <p>Tente selecionar outra categoria.</p>
             </div>
-
         </section>
-
     </main>
 
     <!-- Footer -->
-    <footer id="dg93-footer">
+
+    <footer id="dg93-footer" class="site-footer"></footer>
+
+    <!-- <footer id="dg93-footer">
 
         <div>
             <h2>Estética DG93</h2>
@@ -225,7 +78,7 @@
             </p>
         </div>
 
-    </footer>
+    </footer> -->
 
 </body>
 

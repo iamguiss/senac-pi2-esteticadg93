@@ -5,12 +5,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Entrar — Estética DG93</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
 </head>
 
 <body>
 
     <!-- Header -->
-    <header id="dg93-navbar">
+    <header id="dg93-navbar" class="navbar"></header>
+
+    <!-- <header id="dg93-navbar">
 
         <div>
             <span>Estética DG93</span>
@@ -24,96 +32,40 @@
             </nav>
         </div>
 
-    </header>
+    </header> -->
 
-    <main>
+    <main class="container" style="max-width: 420px; padding: var(--space-8) var(--space-5) var(--space-9);">
+        <h1 style="font-size: var(--fs-h2);">Entrar na sua conta</h1>
+        <p style="margin-top: var(--space-2);">Acesse para acompanhar seus agendamentos.</p>
 
-        <!-- Login -->
-        <section>
-
-            <div>
-
-                <h1>Entrar na sua conta</h1>
-
-                <p>
-                    Acesse para acompanhar seus agendamentos.
-                </p>
-
-                <!-- Aviso de demonstração -->
-                <div>
-                    <strong>DEMONSTRAÇÃO</strong>
-
-                    <p>
-                        Sem back-end conectado ainda.
-                        Use um dos e-mails de exemplo abaixo
-                        para simular o login.
-                    </p>
-
-                    <p>
-                        <strong>Cliente:</strong>
-                        marina.alves@email.com
-                    </p>
-
-                    <p>
-                        <strong>Administrador:</strong>
-                        guilherme@dg93.com.br
-                    </p>
-                </div>
-
-                <!-- Formulário -->
-                <form id="form-login">
-
-                    <div>
-                        <label for="email">E-mail</label>
-
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="seuemail@exemplo.com"
-                            required
-                        >
-
-                        <span>
-                            Informe um e-mail válido.
-                        </span>
-                    </div>
-
-                    <div>
-                        <label for="senha">Senha</label>
-
-                        <input
-                            type="password"
-                            id="senha"
-                            name="senha"
-                            placeholder="Digite sua senha"
-                            required
-                        >
-
-                        <span>
-                            A senha deve ter pelo menos 6 caracteres.
-                        </span>
-                    </div>
-
-                    <button type="submit" id="btn-login">
-                        Entrar
-                    </button>
-
-                    <p>
-                        Não tem uma conta?
-                        <a href="cadastro.html">Cadastre-se</a>
-                    </p>
-
-                </form>
-
+        <form id="form-login" class="stack" style="margin-top: var(--space-6);" novalidate>
+            <div class="field" id="campo-email">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" class="input" placeholder="seuemail@exemplo.com" required>
+                <span class="field-error">Informe um e-mail válido.</span>
             </div>
 
-        </section>
+            <div class="field" id="campo-senha">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" class="input" placeholder="••••••••" required minlength="6">
+                <span class="field-error">A senha deve ter pelo menos 6 caracteres.</span>
+            </div>
 
+            <button type="submit" class="btn btn-primary btn-block" id="btn-login">
+                <span id="btn-login-label">Entrar</span>
+            </button>
+
+            <p class="text-center" style="font-size: var(--fs-caption);">
+                Não tem uma conta? <a href="cadastro.html"
+                    style="color: var(--dg-red); font-weight:600;">Cadastre-se</a>
+            </p>
+        </form>
     </main>
 
     <!-- Footer -->
-    <footer id="dg93-footer">
+    <footer id="dg93-footer" class="site-footer"></footer>
+    
+    <!-- <footer id="dg93-footer">
 
         <div>
             <h2>Estética DG93</h2>
@@ -123,7 +75,7 @@
             </p>
         </div>
 
-    </footer>
+    </footer> -->
 
 </body>
 

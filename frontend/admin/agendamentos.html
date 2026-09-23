@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Agendamentos — Administração | DG93</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/variables.css">
     <link rel="stylesheet" href="../assets/css/base.css">
     <link rel="stylesheet" href="../assets/css/components.css">
@@ -14,227 +15,45 @@
 <body>
 
     <div class="app-shell">
+        <aside id="dg93-sidebar" class="app-sidebar"></aside>
 
-        <!-- Sidebar -->
-        <aside class="app-sidebar">
-
-            <div class="sidebar-logo">
-                Estética DG93
-            </div>
-
-            <nav class="sidebar-nav">
-                <a href="dashboard.html">Visão geral</a>
-                <a href="agendamentos.html">Agendamentos</a>
-                <a href="clientes.html">Clientes</a>
-                <a href="servicos.html">Serviços</a>
-            </nav>
-
-            <div class="sidebar-user">
-                <span>GP</span>
-
-                <div>
-                    <strong>Guilherme Prado</strong>
-                    <small>Administrador</small>
-                </div>
-
-                <a href="../login.html">Sair</a>
-            </div>
-
-        </aside>
-
-        <!-- Área principal -->
         <div class="app-main">
-
-            <!-- Topbar -->
-            <header class="app-topbar">
-
-                <div>
-                    <span>ADMINISTRAÇÃO</span>
-                </div>
-
-            </header>
+            <header id="dg93-topbar" class="app-topbar"></header>
 
             <main class="app-content">
+                <h2 style="margin-bottom: var(--space-5);">Agendamentos</h2>
 
-                <!-- Título -->
-                <section>
+                <div class="field" style="max-width:260px; margin-bottom: var(--space-5);">
+                    <label for="filtro-status">Filtrar por status</label>
+                    <select id="filtro-status" class="select">
+                        <option value="">Todos os status</option>
+                    </select>
+                </div>
 
-                    <h1>Agendamentos</h1>
-
-                    <p>
-                        Consulte e gerencie os agendamentos realizados pelos clientes.
-                    </p>
-
-                </section>
-
-                <!-- Filtro -->
-                <section>
-
-                    <div class="field">
-
-                        <label for="filtro-status">
-                            Filtrar por status
-                        </label>
-
-                        <select id="filtro-status">
-                            <option value="">
-                                Todos os status
-                            </option>
-
-                            <option value="AGUARDANDO_CONFIRMACAO">
-                                Aguardando confirmação
-                            </option>
-
-                            <option value="APROVADO">
-                                Aprovado
-                            </option>
-
-                            <option value="EM_ANDAMENTO">
-                                Em andamento
-                            </option>
-
-                            <option value="CONCLUIDO">
-                                Concluído
-                            </option>
-
-                            <option value="CANCELADO">
-                                Cancelado
-                            </option>
-
-                            <option value="NEGADO">
-                                Negado
-                            </option>
-                        </select>
-
-                    </div>
-
-                </section>
-
-                <!-- Tabela de agendamentos -->
-                <section>
-
-                    <h2>Lista de agendamentos</h2>
-
-                    <div class="table-wrap">
-
-                        <table>
-
-                            <thead>
-
-                                <tr>
-                                    <th>Cliente</th>
-                                    <th>Serviço</th>
-                                    <th>Data</th>
-                                    <th>Local</th>
-                                    <th>Status</th>
-                                    <th>Ações</th>
-                                </tr>
-
-                            </thead>
-
-                            <tbody>
-
-                                <tr>
-
-                                    <td>Nome do cliente</td>
-
-                                    <td>
-                                        Lavagem Completa
-                                    </td>
-
-                                    <td>
-                                        25/09/2026 · 10:00
-                                    </td>
-
-                                    <td>
-                                        Endereço do atendimento
-                                    </td>
-
-                                    <td>
-                                        Aguardando confirmação
-                                    </td>
-
-                                    <td>
-                                        <a href="agendamento-detalhes.html">
-                                            Gerenciar
-                                        </a>
-                                    </td>
-
-                                </tr>
-
-                                <tr>
-
-                                    <td>Outro cliente</td>
-
-                                    <td>
-                                        Higienização Interna
-                                    </td>
-
-                                    <td>
-                                        26/09/2026 · 14:00
-                                    </td>
-
-                                    <td>
-                                        Endereço do atendimento
-                                    </td>
-
-                                    <td>
-                                        Aprovado
-                                    </td>
-
-                                    <td>
-                                        <a href="agendamento-detalhes.html">
-                                            Gerenciar
-                                        </a>
-                                    </td>
-
-                                </tr>
-
-                            </tbody>
-
-                        </table>
-
-                    </div>
-
-                </section>
-
-                <!-- Estado vazio -->
-                <section>
-
-                    <h2>Nenhum agendamento encontrado</h2>
-
-                    <p>
-                        Ajuste o filtro de status para visualizar outros agendamentos.
-                    </p>
-
-                </section>
-
-                <!-- Paginação -->
-                <nav aria-label="Paginação">
-
-                    <button type="button">
-                        ←
-                    </button>
-
-                    <button type="button">
-                        1
-                    </button>
-
-                    <button type="button">
-                        2
-                    </button>
-
-                    <button type="button">
-                        →
-                    </button>
-
-                </nav>
-
+                <div class="table-wrap">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Cliente</th>
+                                <th>Serviço</th>
+                                <th>Data</th>
+                                <th>Local</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabela-agendamentos"></tbody>
+                    </table>
+                </div>
+                <div class="empty-state" id="vazio" hidden>
+                    <h3>Nenhum agendamento encontrado</h3>
+                    <p>Ajuste o filtro de status.</p>
+                </div>
+                <div class="pagination" id="paginacao"></div>
             </main>
-
         </div>
-
     </div>
 
 </body>
+
 </html>

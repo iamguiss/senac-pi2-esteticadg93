@@ -5,174 +5,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meus agendamentos — Área do cliente | DG93</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/variables.css">
+    <link rel="stylesheet" href="../assets/css/base.css">
+    <link rel="stylesheet" href="../assets/css/components.css">
 </head>
 
 <body>
 
     <!-- Área do cliente -->
     <div class="app-shell">
-
-        <!-- Menu lateral -->
-        <aside id="dg93-sidebar">
-
-            <div>
-                <span>Estética DG93</span>
-            </div>
-
-            <nav>
-                <a href="dashboard.html">Dashboard</a>
-                <a href="agendar.html">Agendar serviço</a>
-                <a href="agendamentos.html">Meus agendamentos</a>
-                <a href="perfil.html">Meu perfil</a>
-            </nav>
-
-            <div>
-                <span>Cliente</span>
-                <a href="../login.html">Sair</a>
-            </div>
-
-        </aside>
-
-        <!-- Área principal -->
+        <aside id="dg93-sidebar" class="app-sidebar"></aside>
+      
         <div class="app-main">
-
-            <!-- Barra superior -->
-            <header id="dg93-topbar">
-                <span>Área do cliente</span>
-            </header>
-
-            <main>
-
-                <!-- Cabeçalho -->
-                <section>
-
-                    <div>
-                        <h1>Meus agendamentos</h1>
-
-                        <a href="agendar.html">
-                            Novo agendamento
-                        </a>
-                    </div>
-
-                </section>
-
-                <!-- Filtro -->
-                <section>
-
-                    <div>
-
-                        <label for="filtro-status">
-                            Filtrar por status
-                        </label>
-
-                        <select id="filtro-status">
-
-                            <option value="">
-                                Todos os status
-                            </option>
-
-                            <option value="AGUARDANDO_CONFIRMACAO">
-                                Aguardando confirmação
-                            </option>
-
-                            <option value="APROVADO">
-                                Aprovado
-                            </option>
-
-                            <option value="EM_ANDAMENTO">
-                                Em andamento
-                            </option>
-
-                            <option value="CONCLUIDO">
-                                Concluído
-                            </option>
-
-                            <option value="CANCELADO">
-                                Cancelado
-                            </option>
-
-                            <option value="NEGADO">
-                                Negado
-                            </option>
-
-                        </select>
-
-                    </div>
-
-                </section>
-
-                <!-- Lista de agendamentos -->
-                <section id="lista-agendamentos">
-
-                    <!-- Agendamento -->
-                    <article>
-
-                        <div>
-
-                            <h2>
-                                Lavagem Completa
-                            </h2>
-
-                            <span>
-                                Aprovado
-                            </span>
-
-                        </div>
-
-                        <div>
-
-                            <p>
-                                <strong>Data:</strong>
-                                Data do agendamento
-                            </p>
-
-                            <p>
-                                <strong>Local:</strong>
-                                Local do atendimento
-                            </p>
-
-                            <p>
-                                <strong>Valor:</strong>
-                                R$ 90,00
-                            </p>
-
-                        </div>
-
-                        <div>
-
-                            <a href="agendamento-detalhes.html">
-                                Ver detalhes
-                            </a>
-
-                        </div>
-
-                    </article>
-
-                </section>
-
-                <!-- Estado vazio -->
-                <section id="vazio" hidden>
-
-                    <h2>
-                        Nenhum agendamento encontrado
-                    </h2>
-
-                    <p>
-                        Ajuste o filtro ou crie um novo agendamento.
-                    </p>
-
-                </section>
-
-                <!-- Paginação -->
-                <nav id="paginacao" aria-label="Paginação">
-
-                </nav>
-
-            </main>
-
+          <header id="dg93-topbar" class="app-topbar"></header>
+      
+          <main class="app-content">
+            <div class="row-between" style="margin-bottom: var(--space-5);">
+              <h2>Meus agendamentos</h2>
+              <a href="agendar.html" class="btn btn-primary">Novo agendamento</a>
+            </div>
+      
+            <div class="field" style="max-width:260px; margin-bottom: var(--space-5);">
+              <label for="filtro-status">Filtrar por status</label>
+              <select id="filtro-status" class="select">
+                <option value="">Todos os status</option>
+              </select>
+            </div>
+      
+            <div class="stack" id="lista-agendamentos"></div>
+            <div class="empty-state" id="vazio" hidden>
+              <h3>Nenhum agendamento encontrado</h3>
+              <p>Ajuste o filtro ou crie um novo agendamento.</p>
+            </div>
+            <div class="pagination" id="paginacao"></div>
+          </main>
         </div>
-
-    </div>
+      </div>
 
 </body>
 

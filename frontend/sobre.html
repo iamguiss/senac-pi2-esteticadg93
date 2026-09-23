@@ -5,12 +5,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sobre a DG93 — Estética DG93</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/variables.css">
+    <link rel="stylesheet" href="assets/css/base.css">
+    <link rel="stylesheet" href="assets/css/components.css">
 </head>
 
 <body>
 
     <!-- Header -->
-    <header id="dg93-navbar">
+    <header id="dg93-navbar" class="navbar"></header>
+
+    <!-- <header id="dg93-navbar">
 
         <div>
             <span>Estética DG93</span>
@@ -24,97 +31,58 @@
             </nav>
         </div>
 
-    </header>
+    </header> -->
 
     <main>
-
-        <!-- Apresentação -->
-        <section>
-
-            <div>
-                <h1>
-                    Uma estética automotiva pensada como oficina,
-                    não como lava-rápido.
-                </h1>
-
-                <p>
-                    A DG93 nasceu da vontade de tratar o carro do cliente
-                    com o mesmo cuidado que um mecânico trata um motor:
-                    com processo, técnica e responsabilidade sobre o resultado.
-                </p>
-            </div>
-
+        <section style="background: var(--dg-black); color: var(--dg-white); padding: var(--space-8) 0;">
+          <div class="container" style="max-width: 760px;">
+            <h1 style="color:#fff; font-size: var(--fs-h2);">Uma estética automotiva pensada como oficina, não como lava-rápido.</h1>
+            <p style="color: var(--dg-metal); margin-top: var(--space-4); font-size: var(--fs-body-lg);">
+              A DG93 nasceu da vontade de tratar o carro do cliente com o mesmo cuidado que um mecânico trata um motor: com processo, técnica e responsabilidade sobre o resultado.
+            </p>
+          </div>
         </section>
-
-        <!-- Diferenciais -->
-        <section>
-
-            <div>
-
-                <article>
-                    <h2>Processo definido</h2>
-
-                    <p>
-                        Cada serviço segue uma sequência fixa de etapas,
-                        sem atalhos, para garantir o mesmo padrão em todo atendimento.
-                    </p>
-                </article>
-
-                <article>
-                    <h2>Agendamento sem filas</h2>
-
-                    <p>
-                        Você escolhe o serviço, a data e o horário —
-                        sem precisar chegar cedo para garantir vaga.
-                    </p>
-                </article>
-
-                <article>
-                    <h2>Transparência de preço</h2>
-
-                    <p>
-                        O valor mostrado no agendamento é o valor cobrado.
-                        Sem taxas adicionais de última hora.
-                    </p>
-                </article>
-
+      
+        <section class="container" style="padding: var(--space-8) var(--space-5);">
+          <div class="grid-stats" style="grid-template-columns: repeat(3, 1fr); gap: var(--space-6);">
+            <div class="card">
+              <h3>Processo definido</h3>
+              <p style="margin-top:var(--space-2);">Cada serviço segue uma sequência fixa de etapas, sem atalhos, para garantir o mesmo padrão em todo atendimento.</p>
             </div>
-
-        </section>
-
-        <!-- O que atendemos -->
-        <section>
-
-            <div>
-
-                <div>
-                    <h2>O que atendemos</h2>
-
-                    <ul>
-                        <li>Carros de passeio e utilitários</li>
-                        <li>Motocicletas</li>
-                        <li>Estofados residenciais (sofás)</li>
-                    </ul>
-                </div>
-
-                <article>
-                    <h2>Atendimento no local combinado</h2>
-
-                    <p>
-                        Dependendo do serviço, o atendimento pode ser feito
-                        na unidade da DG93 ou no endereço informado por você
-                        durante o agendamento.
-                    </p>
-                </article>
-
+            <div class="card">
+              <h3>Agendamento sem filas</h3>
+              <p style="margin-top:var(--space-2);">Você escolhe o serviço, a data e o horário — sem precisar chegar cedo para garantir vaga.</p>
             </div>
-
+            <div class="card">
+              <h3>Transparência de preço</h3>
+              <p style="margin-top:var(--space-2);">O valor mostrado no agendamento é o valor cobrado. Sem taxas adicionais de última hora.</p>
+            </div>
+          </div>
         </section>
-
-    </main>
+      
+        <section style="background: var(--gray-100); padding: var(--space-8) 0;">
+          <div class="container" style="display:grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items:center;">
+            <div>
+              <h2>O que atendemos</h2>
+              <ul class="stack" style="margin-top: var(--space-4);">
+                <li>— Carros de passeio e utilitários</li>
+                <li>— Motocicletas</li>
+                <li>— Estofados residenciais (sofás)</li>
+              </ul>
+            </div>
+            <div class="card">
+              <h3>Atendimento no local combinado</h3>
+              <p style="margin-top: var(--space-2);">Dependendo do serviço, o atendimento pode ser feito na unidade da DG93 ou no endereço informado por você durante o agendamento.</p>
+            </div>
+          </div>
+        </section>
+      </main>
 
     <!-- Footer -->
-    <footer id="dg93-footer">
+
+    <footer id="dg93-footer" class="site-footer"></footer>
+
+    <!-- <footer id="dg93-footer">
 
         <div>
             <h2>Estética DG93</h2>
@@ -124,7 +92,7 @@
             </p>
         </div>
 
-    </footer>
+    </footer> -->
 
 </body>
 

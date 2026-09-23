@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Gerenciar agendamento — Administração | DG93</title>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/variables.css">
     <link rel="stylesheet" href="../assets/css/base.css">
     <link rel="stylesheet" href="../assets/css/components.css">
@@ -14,149 +15,40 @@
 <body>
 
     <div class="app-shell">
+        <aside id="dg93-sidebar" class="app-sidebar"></aside>
 
-        <!-- Sidebar -->
-        <aside class="app-sidebar">
-
-            <div class="sidebar-logo">
-                Estética DG93
-            </div>
-
-            <nav class="sidebar-nav">
-                <a href="dashboard.html">Visão geral</a>
-                <a href="agendamentos.html">Agendamentos</a>
-                <a href="clientes.html">Clientes</a>
-                <a href="servicos.html">Serviços</a>
-            </nav>
-
-            <div class="sidebar-user">
-                <span>GP</span>
-                <div>
-                    <strong>Guilherme Prado</strong>
-                    <small>Administrador</small>
-                </div>
-
-                <a href="../login.html">Sair</a>
-            </div>
-
-        </aside>
-
-        <!-- Conteúdo principal -->
         <div class="app-main">
+            <header id="dg93-topbar" class="app-topbar"></header>
 
-            <!-- Topbar -->
-            <header class="app-topbar">
+            <main class="app-content" style="max-width: 680px;">
+                <a href="agendamentos.html"
+                    style="font-size: var(--fs-caption); font-weight:600; color:var(--text-secondary);">‹ Voltar para
+                    agendamentos</a>
 
-                <div>
-                    <span>ADMINISTRAÇÃO</span>
+                <div id="conteudo" style="margin-top: var(--space-4);"></div>
+                <div class="empty-state" id="nao-encontrado" hidden>
+                    <h3>Agendamento não encontrado</h3>
+                    <p>Ele pode ter sido removido dos dados de demonstração.</p>
                 </div>
-
-            </header>
-
-            <main class="app-content">
-
-                <!-- Voltar -->
-                <a href="agendamentos.html">
-                    ← Voltar para agendamentos
-                </a>
-
-                <!-- Título -->
-                <section>
-
-                    <div>
-                        <h1>Gerenciar agendamento</h1>
-                        <span>Aprovado</span>
-                    </div>
-
-                    <h2>Lavagem Completa</h2>
-
-                </section>
-
-                <!-- Informações do agendamento -->
-                <section>
-
-                    <h2>Informações do agendamento</h2>
-
-                    <div>
-
-                        <div>
-                            <span>Cliente</span>
-                            <strong>Nome do cliente</strong>
-                        </div>
-
-                        <div>
-                            <span>E-mail</span>
-                            <strong>cliente@email.com</strong>
-                        </div>
-
-                        <div>
-                            <span>Valor</span>
-                            <strong>R$ 90,00</strong>
-                        </div>
-
-                        <div>
-                            <span>Data</span>
-                            <strong>25/09/2026</strong>
-                        </div>
-
-                        <div>
-                            <span>Horário</span>
-                            <strong>10:00</strong>
-                        </div>
-
-                        <div>
-                            <span>Local</span>
-                            <strong>Endereço combinado</strong>
-                        </div>
-
-                    </div>
-
-                </section>
-
-                <!-- Ações -->
-                <section>
-
-                    <h2>Ações</h2>
-
-                    <button type="button">
-                        Marcar como em andamento
-                    </button>
-
-                    <button type="button">
-                        Marcar como cancelado
-                    </button>
-
-                </section>
-
             </main>
-
         </div>
-
     </div>
 
-    <!-- Modal de negação -->
-    <div>
-
-        <div>
-
-            <h2>Negar agendamento</h2>
-
-            <p>
-                Tem certeza que deseja negar este agendamento?
-                O cliente será notificado.
-            </p>
-
-            <button type="button">
-                Voltar
-            </button>
-
-            <button type="button">
-                Sim, negar
-            </button>
-
+    <!-- Modal: negar agendamento -->
+    <div class="modal-overlay" id="modal-negar">
+        <div class="modal">
+            <div class="modal__head">
+                <h3>Negar agendamento</h3>
+                <button class="modal__close" data-modal-close aria-label="Fechar">×</button>
+            </div>
+            <p>Tem certeza que deseja negar este agendamento? O cliente será notificado.</p>
+            <div class="modal__actions">
+                <button class="btn btn-ghost" data-modal-close>Voltar</button>
+                <button class="btn btn-danger" id="confirmar-negacao">Sim, negar</button>
+            </div>
         </div>
-
     </div>
 
 </body>
+
 </html>

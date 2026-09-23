@@ -39,12 +39,28 @@
 
 ### Etapa 02 — CSS e Identidade Visual
 
-- [ ] Organizar estilos globais
-- [ ] Aplicar cores da identidade visual DG93
-- [ ] Definir tipografia
-- [ ] Estilizar header e navegação
-- [ ] Estilizar formulários
-- [ ] Estilizar cards e tabelas
-- [ ] Estilizar área do cliente
-- [ ] Estilizar área administrativa
-- [ ] Ajustar responsividade
+- [x] Organizar estilos globais
+- [x] Aplicar cores da identidade visual DG93
+- [x] Definir tipografia
+- [x] Estilizar header e navegação
+- [x] Estilizar formulários
+- [x] Estilizar cards e tabelas
+- [x] Estilizar área do cliente
+- [x] Estilizar área administrativa
+- [x] Ajustar responsividade
+
+**Status:** Etapa 02 concluída.
+
+### Etapa 03 — Revisão e Testes do Frontend
+
+- [ ] Revisar as 15 páginas do sistema
+- [ ] Testar navegação entre as páginas
+- [ ] Testar responsividade
+- [ ] Verificar links e caminhos dos arquivos
+- [ ] Verificar classes CSS utilizadas
+- [ ] Identificar CSS não utilizado
+- [ ] Identificar variáveis CSS não utilizadas
+- [ ] Identificar estilos duplicados ou desnecessários
+- [ ] Corrigir problemas encontrados
+- [ ] Testar novamente após as correções
+- [ ] Validar frontend no localhost
