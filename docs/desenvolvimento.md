@@ -53,14 +53,14 @@
 
 ### Etapa 03 — Revisão e Testes do Frontend
 
-- [ ] Revisar as 15 páginas do sistema
-- [ ] Testar navegação entre as páginas
-- [ ] Testar responsividade
-- [ ] Verificar links e caminhos dos arquivos
-- [ ] Verificar classes CSS utilizadas
-- [ ] Identificar CSS não utilizado
-- [ ] Identificar variáveis CSS não utilizadas
-- [ ] Identificar estilos duplicados ou desnecessários
-- [ ] Corrigir problemas encontrados
-- [ ] Testar novamente após as correções
-- [ ] Validar frontend no localhost
+- [x] Revisar as 15 páginas
+- [x] Testar a navegação entre as páginas
+- [x] Testar responsividade
+- [x] Verificar links e caminhos dos arquivos
+- [x] Verificar classes CSS utilizadas
+- [x] Verificar variáveis CSS utilizadas
+- [x] Identificar CSS não utilizado
+- [x] Identificar estilos duplicados
+- [x] Corrigir problemas encontrados
+- [x] Testar novamente após as correções
+- [x] Validar o frontend no localhost
