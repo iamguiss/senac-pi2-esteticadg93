@@ -17,23 +17,6 @@
 
     <!-- Header -->
     <header id="dg93-navbar" class="navbar"></header>
-
-    <!-- <header id="dg93-navbar">
-
-        <div>
-            <span>Estética DG93</span>
-
-            <nav>
-                <a href="index.html">Início</a>
-                <a href="servicos.html">Serviços</a>
-                <a href="sobre.html">Sobre</a>
-                <a href="login.html">Entrar</a>
-                <a href="cadastro.html">Agendar</a>
-            </nav>
-        </div>
-
-    </header> -->
-
     <main>
         <section style="background: var(--dg-black); color: var(--dg-white); padding: var(--space-7) 0;">
             <div class="container">
@@ -68,17 +51,51 @@
 
     <footer id="dg93-footer" class="site-footer"></footer>
 
-    <!-- <footer id="dg93-footer">
+    <script src="assets/js/data/mock-data.js"></script>
+    <script src="assets/js/data/store.js"></script>
+    <script src="assets/js/utils.js"></script>
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/components/toast.js"></script>
+    <script src="assets/js/components/navbar.js"></script>
+    <script src="assets/js/components/footer.js"></script>
+    <script>
+        DG93Navbar.render('servicos');
+        DG93Footer.render();
 
-        <div>
-            <h2>Estética DG93</h2>
+        const todosServicos = DG93Store.getServicos({ somenteAtivos: true });
+        const categorias = [...new Set(todosServicos.map(s => s.categoria))];
+        const selectCategoria = document.getElementById('filtro-categoria');
+        categorias.forEach(c => {
+            const opt = document.createElement('option');
+            opt.value = c; opt.textContent = c;
+            selectCategoria.appendChild(opt);
+        });
 
-            <p>
-                Cuidado automotivo profissional.
-            </p>
+        function renderServicos(categoria) {
+            const lista = categoria ? todosServicos.filter(s => s.categoria === categoria) : todosServicos;
+            const container = document.getElementById('dg93-lista-servicos');
+            const vazio = document.getElementById('dg93-servicos-vazio');
+
+            vazio.hidden = lista.length > 0;
+            container.innerHTML = lista.map(s => `
+      <article class="service-card">
+        <div class="service-card__media">Foto do serviço</div>
+        <div class="service-card__body">
+          <span class="service-card__category">${s.categoria}</span>
+          <h3>${s.nome_servico}</h3>
+          <p>${s.descricao}</p>
+          <div class="service-card__price">${DG93Utils.formatCurrency(s.preco)}</div>
         </div>
+        <div class="service-card__footer">
+          <a href="cadastro.html" class="btn btn-dark btn-block">Agendar este serviço</a>
+        </div>
+      </article>
+    `).join('');
+        }
 
-    </footer> -->
+        selectCategoria.addEventListener('change', (e) => renderServicos(e.target.value));
+        renderServicos('');
+    </script>
 
 </body>
 

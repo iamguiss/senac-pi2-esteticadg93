@@ -64,3 +64,24 @@
 - [x] Corrigir problemas encontrados
 - [x] Testar novamente após as correções
 - [x] Validar o frontend no localhost
+
+### Etapa 04 — JavaScript
+
+- [x] Criar estrutura inicial do JavaScript
+- [x] Criar arquivos JavaScript necessários
+- [x] Integrar JavaScript com as páginas públicas
+- [x] Ajustar os HTML para utilização dos scripts
+- [x] Implementar funcionalidades iniciais com dados simulados
+- [x] Implementar validações e interações das páginas públicas
+- [ ] Integrar JavaScript com as páginas da área do cliente
+- [ ] Integrar JavaScript com as páginas da área administrativa
+- [ ] Implementar interações do fluxo de agendamento
+- [ ] Implementar estados e status dos agendamentos
+- [ ] Implementar modais e mensagens
+- [ ] Testar as funcionalidades JavaScript
+- [ ] Corrigir problemas encontrados
+- [ ] Testar novamente após as correções
+- [ ] Preparar frontend para integração com PHP
+
+**Resumo:**
+Foi criada a estrutura JavaScript do projeto e os arquivos necessários para as funcionalidades do frontend. As páginas públicas foram ajustadas para utilizar os scripts e foram implementadas as primeiras interações, validações e funcionalidades utilizando dados simulados. A próxima etapa será integrar e desenvolver o JavaScript das áreas do cliente e administrador, finalizando os comportamentos do frontend antes da integração com PHP e MySQL.

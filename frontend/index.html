@@ -1,153 +1,144 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Estética DG93 — Cuidado automotivo profissional</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/variables.css">
-    <link rel="stylesheet" href="assets/css/base.css">
-    <link rel="stylesheet" href="assets/css/components.css">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estética DG93 — Cuidado automotivo profissional</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/variables.css">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
 </head>
-
 <body>
 
-    <!-- Header -->
-    <header id="dg93-navbar">
-        <!-- <div>
-            <span>Estética DG93</span>
+<header id="dg93-navbar" class="navbar"></header>
 
-            <nav>
-                <a href="index.html">Início</a>
-                <a href="servicos.html">Serviços</a>
-                <a href="sobre.html">Sobre</a>
-                <a href="login.html">Entrar</a>
-                <a href="cadastro.html">Agendar</a>
-            </nav>
+<main>
+
+  <!-- Hero -->
+  <section style="background: linear-gradient(160deg, var(--dg-black) 0%, var(--dg-graphite) 100%); color: var(--dg-white); padding: var(--space-9) 0;">
+    <div class="container" style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--space-8); align-items:center;">
+      <div>
+        <p class="text-muted" style="color:var(--dg-metal); font-size: var(--fs-body-lg); margin-bottom: var(--space-4);">Estética automotiva</p>
+        <h1 style="color:var(--dg-white); max-width: 14ch;">Seu carro sai daqui como se tivesse acabado de sair da concessionária.</h1>
+        <p style="color:var(--dg-metal); font-size: var(--fs-body-lg); max-width:46ch; margin-top: var(--space-5);">
+          Lavagem, higienização e estética para carros, motos e estofados — com atendimento agendado, sem filas e sem surpresas no valor.
+        </p>
+        <div class="row-between" style="justify-content:flex-start; gap: var(--space-4); margin-top: var(--space-6);">
+          <a href="cadastro.html" class="btn btn-primary">Agendar um serviço</a>
+          <a href="servicos.html" class="btn btn-outline" style="color:#fff; border-color:#5c5c5c;">Ver serviços e valores</a>
         </div>
-    </header> -->
-
-        <main>
-            <!-- Hero -->
-            <section
-                style="background: linear-gradient(160deg, var(--dg-black) 0%, var(--dg-graphite) 100%); color: var(--dg-white); padding: var(--space-9) 0;">
-                <div class="container"
-                    style="display:grid; grid-template-columns: 1.1fr 0.9fr; gap: var(--space-8); align-items:center;">
-                    <div>
-                        <p class="text-muted"
-                            style="color:var(--dg-metal); font-size: var(--fs-body-lg); margin-bottom: var(--space-4);">
-                            Estética automotiva</p>
-                        <h1 style="color:var(--dg-white); max-width: 14ch;">Seu carro sai daqui como se tivesse acabado
-                            de sair da concessionária.</h1>
-                        <p
-                            style="color:var(--dg-metal); font-size: var(--fs-body-lg); max-width:46ch; margin-top: var(--space-5);">
-                            Lavagem, higienização e estética para carros, motos e estofados — com atendimento agendado,
-                            sem filas e sem surpresas no valor.
-                        </p>
-                        <div class="row-between"
-                            style="justify-content:flex-start; gap: var(--space-4); margin-top: var(--space-6);">
-                            <a href="cadastro.html" class="btn btn-primary">Agendar um serviço</a>
-                            <a href="servicos.html" class="btn btn-outline"
-                                style="color:#fff; border-color:#5c5c5c;">Ver serviços e valores</a>
-                        </div>
-                    </div>
-                    <div class="card" style="background:#1a1a1a; border-color:#333; padding: var(--space-6);">
-                        <p class="text-muted" style="color:var(--dg-metal);">Próximos horários com vaga</p>
-                        <div class="stack" style="margin-top: var(--space-4);">
-                            <div class="row-between"
-                                style="border-bottom:1px solid #333; padding-bottom: var(--space-3);">
-                                <span style="color:#fff;">Ter · 09h00</span>
-                                <span class="badge badge--aprovado">Disponível</span>
-                            </div>
-                            <div class="row-between"
-                                style="border-bottom:1px solid #333; padding-bottom: var(--space-3);">
-                                <span style="color:#fff;">Qua · 14h00</span>
-                                <span class="badge badge--aprovado">Disponível</span>
-                            </div>
-                            <div class="row-between">
-                                <span style="color:#fff;">Sex · 10h30</span>
-                                <span class="badge badge--aguardando">Poucas vagas</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Diferenciais -->
-            <section class="container" style="padding: var(--space-8) var(--space-5);">
-                <div class="grid-stats">
-                    <div class="stat-card">
-                        <span class="stat-card__value">+1.200</span>
-                        <span class="stat-card__label">Atendimentos realizados</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-card__value">4.9/5</span>
-                        <span class="stat-card__label">Avaliação média dos clientes</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-card__value">100%</span>
-                        <span class="stat-card__label">Agendamento sem burocracia</span>
-                    </div>
-                    <div class="stat-card">
-                        <span class="stat-card__value">6</span>
-                        <span class="stat-card__label">Serviços especializados</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Serviços em destaque -->
-            <section class="container" style="padding: var(--space-7) var(--space-5) var(--space-8);">
-                <div class="row-between" style="margin-bottom: var(--space-6);">
-                    <div>
-                        <h2>Serviços mais procurados</h2>
-                        <p style="margin-top:var(--space-2);">Valores fixos, sem taxas escondidas.</p>
-                    </div>
-                    <a href="servicos.html" class="btn btn-outline">Ver todos os serviços</a>
-                </div>
-                <div class="grid-services" id="dg93-servicos-destaque"></div>
-            </section>
-
-            <!-- Como funciona -->
-            <section style="background: var(--gray-100); padding: var(--space-8) 0;">
-                <div class="container">
-                    <h2 class="text-center" style="margin-bottom: var(--space-7);">Como funciona o agendamento</h2>
-                    <div class="grid-stats">
-                        <div class="stack">
-                            <h3>1. Escolha o serviço</h3>
-                            <p>Veja a descrição e o valor de cada serviço antes de decidir.</p>
-                        </div>
-                        <div class="stack">
-                            <h3>2. Escolha data e horário</h3>
-                            <p>Selecione o dia, o horário e informe o local do atendimento.</p>
-                        </div>
-                        <div class="stack">
-                            <h3>3. Aguarde a confirmação</h3>
-                            <p>A equipe da DG93 confirma o horário combinado com você.</p>
-                        </div>
-                        <div class="stack">
-                            <h3>4. Acompanhe o status</h3>
-                            <p>Veja em tempo real se o atendimento está aprovado, em andamento ou concluído.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
-
-        <!-- Footer -->
-        <footer id="dg93-footer" class="site-footer"></footer>
-        <!-- <div>
-            <h2>Estética DG93</h2>
-
-            <p>
-                Cuidado automotivo profissional.
-            </p>
+      </div>
+      <div class="card" style="background:#1a1a1a; border-color:#333; padding: var(--space-6);">
+        <p class="text-muted" style="color:var(--dg-metal);">Próximos horários com vaga</p>
+        <div class="stack" style="margin-top: var(--space-4);">
+          <div class="row-between" style="border-bottom:1px solid #333; padding-bottom: var(--space-3);">
+            <span style="color:#fff;">Ter · 09h00</span>
+            <span class="badge badge--aprovado">Disponível</span>
+          </div>
+          <div class="row-between" style="border-bottom:1px solid #333; padding-bottom: var(--space-3);">
+            <span style="color:#fff;">Qua · 14h00</span>
+            <span class="badge badge--aprovado">Disponível</span>
+          </div>
+          <div class="row-between">
+            <span style="color:#fff;">Sex · 10h30</span>
+            <span class="badge badge--aguardando">Poucas vagas</span>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        </footer> -->
+  <!-- Diferenciais -->
+  <section class="container" style="padding: var(--space-8) var(--space-5);">
+    <div class="grid-stats">
+      <div class="stat-card">
+        <span class="stat-card__value">+1.200</span>
+        <span class="stat-card__label">Atendimentos realizados</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value">4.9/5</span>
+        <span class="stat-card__label">Avaliação média dos clientes</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value">100%</span>
+        <span class="stat-card__label">Agendamento sem burocracia</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-card__value">6</span>
+        <span class="stat-card__label">Serviços especializados</span>
+      </div>
+    </div>
+  </section>
 
+  <!-- Serviços em destaque -->
+  <section class="container" style="padding: var(--space-7) var(--space-5) var(--space-8);">
+    <div class="row-between" style="margin-bottom: var(--space-6);">
+      <div>
+        <h2>Serviços mais procurados</h2>
+        <p style="margin-top:var(--space-2);">Valores fixos, sem taxas escondidas.</p>
+      </div>
+      <a href="servicos.html" class="btn btn-outline">Ver todos os serviços</a>
+    </div>
+    <div class="grid-services" id="dg93-servicos-destaque"></div>
+  </section>
+
+  <!-- Como funciona -->
+  <section style="background: var(--gray-100); padding: var(--space-8) 0;">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom: var(--space-7);">Como funciona o agendamento</h2>
+      <div class="grid-stats">
+        <div class="stack">
+          <h3>1. Escolha o serviço</h3>
+          <p>Veja a descrição e o valor de cada serviço antes de decidir.</p>
+        </div>
+        <div class="stack">
+          <h3>2. Escolha data e horário</h3>
+          <p>Selecione o dia, o horário e informe o local do atendimento.</p>
+        </div>
+        <div class="stack">
+          <h3>3. Aguarde a confirmação</h3>
+          <p>A equipe da DG93 confirma o horário combinado com você.</p>
+        </div>
+        <div class="stack">
+          <h3>4. Acompanhe o status</h3>
+          <p>Veja em tempo real se o atendimento está aprovado, em andamento ou concluído.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer id="dg93-footer" class="site-footer"></footer>
+
+<script src="assets/js/data/mock-data.js"></script>
+<script src="assets/js/data/store.js"></script>
+<script src="assets/js/utils.js"></script>
+<script src="assets/js/auth.js"></script>
+<script src="assets/js/components/toast.js"></script>
+<script src="assets/js/components/navbar.js"></script>
+<script src="assets/js/components/footer.js"></script>
+<script>
+  DG93Navbar.render('inicio');
+  DG93Footer.render();
+
+  const destaques = DG93Store.getServicos({ somenteAtivos: true }).slice(0, 4);
+  document.getElementById('dg93-servicos-destaque').innerHTML = destaques.map(s => `
+    <article class="service-card">
+      <div class="service-card__media">Foto do serviço</div>
+      <div class="service-card__body">
+        <span class="service-card__category">${s.categoria}</span>
+        <h3>${s.nome_servico}</h3>
+        <p>${s.descricao}</p>
+        <div class="service-card__price">${DG93Utils.formatCurrency(s.preco)} <small>a partir de</small></div>
+      </div>
+      <div class="service-card__footer">
+        <a href="cadastro.html" class="btn btn-dark btn-block">Agendar este serviço</a>
+      </div>
+    </article>
+  `).join('');
+</script>
 </body>
-
 </html>

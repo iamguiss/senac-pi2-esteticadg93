@@ -19,18 +19,6 @@
         <!-- Header -->
         <header id="dg93-navbar" class="navbar"></header>
 
-        <!-- <div>
-                <span>Estética DG93</span>
-
-                <nav>
-                    <a href="index.html">Início</a>
-                    <a href="servicos.html">Serviços</a>
-                    <a href="sobre.html">Sobre</a>
-                    <a href="login.html">Entrar</a>
-                    <a href="cadastro.html">Agendar</a>
-                </nav>
-            </div> -->
-
         <main class="container" style="max-width: 460px; padding: var(--space-8) var(--space-5) var(--space-9);">
             <h1 style="font-size: var(--fs-h2);">Criar sua conta</h1>
             <p style="margin-top: var(--space-2);">Cadastre-se para agendar serviços e acompanhar seus atendimentos.</p>
@@ -83,17 +71,71 @@
         </main>
 
         <footer id="dg93-footer" class="site-footer"></footer>
-        <!-- <footer id="dg93-footer">
 
-            <div>
-                <h2>Estética DG93</h2>
-                <p>
-                    Cuidado automotivo profissional.
-                </p>
-            </div>
+        <script src="assets/js/data/mock-data.js"></script>
+        <script src="assets/js/data/store.js"></script>
+        <script src="assets/js/utils.js"></script>
+        <script src="assets/js/auth.js"></script>
+        <script src="assets/js/components/toast.js"></script>
+        <script src="assets/js/components/navbar.js"></script>
+        <script src="assets/js/components/footer.js"></script>
+        <script>
+            DG93Navbar.render('');
+            DG93Footer.render();
 
-        </footer> -->
+            const campos = {
+                nome: { el: document.getElementById('campo-nome'), validar: v => v.trim().split(' ').filter(Boolean).length >= 2 },
+                email: { el: document.getElementById('campo-email'), validar: v => /\S+@\S+\.\S+/.test(v) },
+                cpf: { el: document.getElementById('campo-cpf'), validar: v => v.replace(/\D/g, '').length === 11 },
+                sexo: { el: document.getElementById('campo-sexo'), validar: v => v !== '' },
+                senha: { el: document.getElementById('campo-senha'), validar: v => v.length >= 6 }
+            };
 
+            document.getElementById('cpf').addEventListener('input', (e) => {
+                let v = e.target.value.replace(/\D/g, '').slice(0, 11);
+                v = v.replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d)/, '$1.$2').replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+                e.target.value = v;
+            });
+
+            const form = document.getElementById('form-cadastro');
+            const btn = document.getElementById('btn-cadastro');
+            const btnLabel = document.getElementById('btn-cadastro-label');
+
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                let valido = true;
+
+                Object.entries(campos).forEach(([id, { el, validar }]) => {
+                    const ok = validar(document.getElementById(id).value);
+                    el.classList.toggle('has-error', !ok);
+                    if (!ok) valido = false;
+                });
+
+                if (!valido) return;
+
+                const email = document.getElementById('email').value.trim();
+                if (DG93Store.getUsuarioPorEmail(email)) {
+                    campos.email.el.classList.add('has-error');
+                    campos.email.el.querySelector('.field-error').textContent = 'Este e-mail já está cadastrado na demonstração.';
+                    return;
+                }
+
+                btn.disabled = true;
+                btnLabel.innerHTML = '<span class="spinner"></span> Criando conta...';
+
+                setTimeout(() => {
+                    const novoUsuario = DG93Store.cadastrarUsuario({
+                        nome: document.getElementById('nome').value.trim(),
+                        email,
+                        cpf: document.getElementById('cpf').value,
+                        sexo: document.getElementById('sexo').value,
+                        perfil: 'cliente'
+                    });
+                    DG93Auth.login(novoUsuario.email);
+                    DG93Toast.show('Conta criada com sucesso!', 'success');
+                    setTimeout(() => { window.location.href = 'cliente/dashboard.html'; }, 500);
+                }, 600);
+            });
+        </script>
     </body>
-
 </html>
