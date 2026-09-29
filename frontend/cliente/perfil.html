@@ -61,7 +61,50 @@
             </main>
         </div>
     </div>
+    <script src="../assets/js/data/mock-data.js"></script>
+    <script src="../assets/js/data/store.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/components/toast.js"></script>
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script>
+        const usuario = DG93Sidebar.render({ perfil: 'cliente', active: 'perfil' });
 
+        if (usuario) {
+            document.getElementById('nome').value = usuario.nome;
+            document.getElementById('email').value = usuario.email;
+            document.getElementById('cpf').value = usuario.cpf;
+            document.getElementById('sexo').value = usuario.sexo;
+            document.getElementById('tipo-perfil').textContent = 'Cliente';
+
+            const campoNome = document.getElementById('campo-nome');
+            const campoEmail = document.getElementById('campo-email');
+
+            document.getElementById('form-perfil').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const nome = document.getElementById('nome').value.trim();
+                const email = document.getElementById('email').value.trim();
+
+                const nomeOk = nome.split(' ').filter(Boolean).length >= 2;
+                const emailOk = /\S+@\S+\.\S+/.test(email);
+                campoNome.classList.toggle('has-error', !nomeOk);
+                campoEmail.classList.toggle('has-error', !emailOk);
+                if (!nomeOk || !emailOk) return;
+
+                const btn = document.getElementById('btn-salvar');
+                const label = document.getElementById('btn-salvar-label');
+                btn.disabled = true;
+                label.innerHTML = '<span class="spinner"></span> Salvando...';
+
+                setTimeout(() => {
+                    DG93Store.atualizarUsuario(usuario.id_user, { nome, email, sexo: document.getElementById('sexo').value });
+                    btn.disabled = false;
+                    label.textContent = 'Salvar alterações';
+                    DG93Toast.show('Perfil atualizado com sucesso!', 'success');
+                }, 500);
+            });
+        }
+    </script>
 </body>
 
 </html>

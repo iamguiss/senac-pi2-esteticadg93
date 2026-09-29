@@ -81,7 +81,81 @@
             </form>
         </div>
     </div>
+    <script src="../assets/js/data/mock-data.js"></script>
+    <script src="../assets/js/data/store.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/components/toast.js"></script>
+    <script src="../assets/js/components/modal.js"></script>
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script>
+        const usuario = DG93Sidebar.render({ perfil: 'admin', active: 'servicos' });
 
+        if (usuario) {
+            function renderTabela() {
+                const servicos = DG93Store.getServicos();
+                document.getElementById('tabela-servicos').innerHTML = servicos.map(s => `
+        <tr>
+          <td>${s.nome_servico}</td>
+          <td>${s.categoria}</td>
+          <td>${DG93Utils.formatCurrency(s.preco)}</td>
+          <td><span class="badge ${s.ativo ? 'badge--aprovado' : 'badge--cancelado'}">${s.ativo ? 'Ativo' : 'Inativo'}</span></td>
+          <td class="col-actions">
+            <button class="btn btn-outline btn-sm" data-editar="${s.id_service}">Editar</button>
+            <button class="btn btn-ghost btn-sm" data-alternar="${s.id_service}">${s.ativo ? 'Desativar' : 'Ativar'}</button>
+          </td>
+        </tr>
+      `).join('');
+
+                document.querySelectorAll('[data-editar]').forEach(b => b.addEventListener('click', () => abrirModal(Number(b.dataset.editar))));
+                document.querySelectorAll('[data-alternar]').forEach(b => b.addEventListener('click', () => {
+                    DG93Store.alternarServicoAtivo(Number(b.dataset.alternar));
+                    DG93Toast.show('Status do serviço atualizado.', 'success');
+                    renderTabela();
+                }));
+            }
+
+            function abrirModal(id) {
+                const form = document.getElementById('form-servico');
+                form.reset();
+                if (id) {
+                    const s = DG93Store.getServico(id);
+                    document.getElementById('modal-servico-titulo').textContent = 'Editar serviço';
+                    document.getElementById('servico-id').value = s.id_service;
+                    document.getElementById('servico-nome').value = s.nome_servico;
+                    document.getElementById('servico-categoria').value = s.categoria;
+                    document.getElementById('servico-preco').value = s.preco;
+                    document.getElementById('servico-descricao').value = s.descricao;
+                    document.getElementById('servico-ativo').checked = s.ativo;
+                } else {
+                    document.getElementById('modal-servico-titulo').textContent = 'Novo serviço';
+                    document.getElementById('servico-id').value = '';
+                    document.getElementById('servico-ativo').checked = true;
+                }
+                DG93Modal.open('modal-servico');
+            }
+
+            document.getElementById('btn-novo-servico').addEventListener('click', () => abrirModal(null));
+
+            document.getElementById('form-servico').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const id = document.getElementById('servico-id').value;
+                DG93Store.salvarServico({
+                    id_service: id ? Number(id) : undefined,
+                    nome_servico: document.getElementById('servico-nome').value.trim(),
+                    categoria: document.getElementById('servico-categoria').value.trim(),
+                    preco: Number(document.getElementById('servico-preco').value),
+                    descricao: document.getElementById('servico-descricao').value.trim(),
+                    ativo: document.getElementById('servico-ativo').checked
+                });
+                DG93Modal.close('modal-servico');
+                DG93Toast.show(id ? 'Serviço atualizado com sucesso!' : 'Serviço criado com sucesso!', 'success');
+                renderTabela();
+            });
+
+            renderTabela();
+        }
+    </script>
 </body>
 
 </html>

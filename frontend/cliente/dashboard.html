@@ -2,74 +2,121 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard — Área do cliente | DG93</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/variables.css">
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard — Área do cliente | DG93</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
 </head>
 
 <body>
 
-    <!-- Área do cliente -->
-    <div class="app-shell">
-        <aside id="dg93-sidebar" class="app-sidebar"></aside>
-      
-        <div class="app-main">
-          <header id="dg93-topbar" class="app-topbar"></header>
-      
-          <main class="app-content" id="conteudo" hidden>
-            <div class="row-between" style="margin-bottom: var(--space-6);">
-              <div>
-                <h2 id="saudacao"></h2>
-                <p style="margin-top:var(--space-1);">Aqui está um resumo dos seus agendamentos.</p>
-              </div>
-              <a href="agendar.html" class="btn btn-primary">Novo agendamento</a>
-            </div>
-      
-            <div class="grid-stats" style="margin-bottom: var(--space-7);">
-              <div class="card stat-card">
-                <span class="stat-card__label">Total de agendamentos</span>
-                <span class="stat-card__value" id="stat-total">0</span>
-              </div>
-              <div class="card stat-card">
-                <span class="stat-card__label">Aguardando confirmação</span>
-                <span class="stat-card__value" id="stat-aguardando">0</span>
-              </div>
-              <div class="card stat-card">
-                <span class="stat-card__label">Em andamento</span>
-                <span class="stat-card__value" id="stat-andamento">0</span>
-              </div>
-              <div class="card stat-card">
-                <span class="stat-card__label">Concluídos</span>
-                <span class="stat-card__value" id="stat-concluido">0</span>
-              </div>
-            </div>
-      
-            <div class="row-between" style="margin-bottom: var(--space-4);">
-              <h3>Próximos agendamentos</h3>
-              <a href="agendamentos.html" style="font-size: var(--fs-caption); font-weight:600; color:var(--dg-red);">Ver todos</a>
-            </div>
-            <div class="stack" id="lista-proximos"></div>
-            <div class="empty-state" id="vazio-proximos" hidden>
-              <h3>Nenhum agendamento em aberto</h3>
-              <p>Que tal agendar seu próximo serviço?</p>
-              <a href="agendar.html" class="btn btn-primary" style="margin-top:var(--space-4);">Agendar serviço</a>
-            </div>
-          </main>
-      
-          <main class="app-content" id="carregando">
-            <div class="stack">
-              <div class="skeleton" style="height:90px;"></div>
-              <div class="skeleton" style="height:90px;"></div>
-            </div>
-          </main>
-        </div>
-      </div>
+  <!-- Área do cliente -->
+  <div class="app-shell">
+    <aside id="dg93-sidebar" class="app-sidebar"></aside>
 
+    <div class="app-main">
+      <header id="dg93-topbar" class="app-topbar"></header>
+
+      <main class="app-content" id="conteudo" hidden>
+        <div class="row-between" style="margin-bottom: var(--space-6);">
+          <div>
+            <h2 id="saudacao"></h2>
+            <p style="margin-top:var(--space-1);">Aqui está um resumo dos seus agendamentos.</p>
+          </div>
+          <a href="agendar.html" class="btn btn-primary">Novo agendamento</a>
+        </div>
+
+        <div class="grid-stats" style="margin-bottom: var(--space-7);">
+          <div class="card stat-card">
+            <span class="stat-card__label">Total de agendamentos</span>
+            <span class="stat-card__value" id="stat-total">0</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-card__label">Aguardando confirmação</span>
+            <span class="stat-card__value" id="stat-aguardando">0</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-card__label">Em andamento</span>
+            <span class="stat-card__value" id="stat-andamento">0</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-card__label">Concluídos</span>
+            <span class="stat-card__value" id="stat-concluido">0</span>
+          </div>
+        </div>
+
+        <div class="row-between" style="margin-bottom: var(--space-4);">
+          <h3>Próximos agendamentos</h3>
+          <a href="agendamentos.html" style="font-size: var(--fs-caption); font-weight:600; color:var(--dg-red);">Ver
+            todos</a>
+        </div>
+        <div class="stack" id="lista-proximos"></div>
+        <div class="empty-state" id="vazio-proximos" hidden>
+          <h3>Nenhum agendamento em aberto</h3>
+          <p>Que tal agendar seu próximo serviço?</p>
+          <a href="agendar.html" class="btn btn-primary" style="margin-top:var(--space-4);">Agendar serviço</a>
+        </div>
+      </main>
+
+      <main class="app-content" id="carregando">
+        <div class="stack">
+          <div class="skeleton" style="height:90px;"></div>
+          <div class="skeleton" style="height:90px;"></div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="../assets/js/data/mock-data.js"></script>
+  <script src="../assets/js/data/store.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/components/toast.js"></script>
+  <script src="../assets/js/components/sidebar.js"></script>
+  <script>
+    const usuario = DG93Sidebar.render({ perfil: 'cliente', active: 'dashboard' });
+
+    if (usuario) {
+      setTimeout(() => {
+        document.getElementById('carregando').remove();
+        document.getElementById('conteudo').hidden = false;
+
+        document.getElementById('saudacao').textContent = `Olá, ${usuario.nome.split(' ')[0]}`;
+
+        const agendamentos = DG93Store.getAgendamentos({ id_user: usuario.id_user });
+        document.getElementById('stat-total').textContent = agendamentos.length;
+        document.getElementById('stat-aguardando').textContent = agendamentos.filter(a => a.status === 'AGUARDANDO_CONFIRMACAO').length;
+        document.getElementById('stat-andamento').textContent = agendamentos.filter(a => a.status === 'EM_ANDAMENTO').length;
+        document.getElementById('stat-concluido').textContent = agendamentos.filter(a => a.status === 'CONCLUIDO').length;
+
+        const proximos = agendamentos.filter(a => !['CONCLUIDO', 'CANCELADO', 'NEGADO'].includes(a.status)).slice(0, 3);
+        document.getElementById('vazio-proximos').hidden = proximos.length > 0;
+
+        document.getElementById('lista-proximos').innerHTML = proximos.map(a => {
+          const servico = DG93Store.getServico(a.id_service);
+          return `
+          <article class="appointment-card" data-status="${a.status}">
+            <div class="appointment-card__head">
+              <h3>${servico.nome_servico}</h3>
+              ${DG93Utils.statusBadgeHtml(a.status)}
+            </div>
+            <div class="appointment-card__meta">
+              <span><strong>Data:</strong> ${DG93Utils.formatDate(a.data)} às ${a.hora}</span>
+              <span><strong>Local:</strong> ${a.local}</span>
+              <span><strong>Valor:</strong> ${DG93Utils.formatCurrency(servico.preco)}</span>
+            </div>
+            <div class="appointment-card__actions">
+              <a href="agendamento-detalhes.html?id=${a.id_agendamento}" class="btn btn-outline btn-sm">Ver detalhes</a>
+            </div>
+          </article>
+        `;
+        }).join('');
+      }, 400);
+    }
+  </script>
 </body>
 
 </html>

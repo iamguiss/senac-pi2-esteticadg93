@@ -2,45 +2,89 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clientes — Administração | DG93</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/variables.css">
-    <link rel="stylesheet" href="../assets/css/base.css">
-    <link rel="stylesheet" href="../assets/css/components.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clientes — Administração | DG93</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../assets/css/variables.css">
+  <link rel="stylesheet" href="../assets/css/base.css">
+  <link rel="stylesheet" href="../assets/css/components.css">
 </head>
 
 <body>
 
-    <div class="app-shell">
-        <aside id="dg93-sidebar" class="app-sidebar"></aside>
-      
-        <div class="app-main">
-          <header id="dg93-topbar" class="app-topbar"></header>
-      
-          <main class="app-content">
-            <div class="row-between" style="margin-bottom: var(--space-5);">
-              <h2>Clientes</h2>
-              <input type="search" id="busca-cliente" class="input" placeholder="Buscar por nome ou e-mail" style="max-width: 280px;">
-            </div>
-      
-            <div class="table-wrap">
-              <table class="table">
-                <thead>
-                  <tr><th>Nome</th><th>E-mail</th><th>CPF</th><th>Agendamentos</th><th></th></tr>
-                </thead>
-                <tbody id="tabela-clientes"></tbody>
-              </table>
-            </div>
-            <div class="empty-state" id="vazio" hidden>
-              <h3>Nenhum cliente encontrado</h3>
-              <p>Tente buscar por outro nome ou e-mail.</p>
-            </div>
-          </main>
+  <div class="app-shell">
+    <aside id="dg93-sidebar" class="app-sidebar"></aside>
+
+    <div class="app-main">
+      <header id="dg93-topbar" class="app-topbar"></header>
+
+      <main class="app-content">
+        <div class="row-between" style="margin-bottom: var(--space-5);">
+          <h2>Clientes</h2>
+          <input type="search" id="busca-cliente" class="input" placeholder="Buscar por nome ou e-mail"
+            style="max-width: 280px;">
         </div>
-      </div>
+
+        <div class="table-wrap">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Nome</th>
+                <th>E-mail</th>
+                <th>CPF</th>
+                <th>Agendamentos</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="tabela-clientes"></tbody>
+          </table>
+        </div>
+        <div class="empty-state" id="vazio" hidden>
+          <h3>Nenhum cliente encontrado</h3>
+          <p>Tente buscar por outro nome ou e-mail.</p>
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="../assets/js/data/mock-data.js"></script>
+  <script src="../assets/js/data/store.js"></script>
+  <script src="../assets/js/utils.js"></script>
+  <script src="../assets/js/auth.js"></script>
+  <script src="../assets/js/components/toast.js"></script>
+  <script src="../assets/js/components/sidebar.js"></script>
+  <script>
+    const usuario = DG93Sidebar.render({ perfil: 'admin', active: 'clientes' });
+
+    if (usuario) {
+      const clientes = DG93Store.getUsuarios({ perfil: 'cliente' });
+
+      function render(filtro = '') {
+        const termo = filtro.trim().toLowerCase();
+        const lista = clientes.filter(c => c.nome.toLowerCase().includes(termo) || c.email.toLowerCase().includes(termo));
+
+        document.getElementById('vazio').hidden = lista.length > 0;
+        document.querySelector('.table-wrap').hidden = lista.length === 0;
+
+        document.getElementById('tabela-clientes').innerHTML = lista.map(c => {
+          const qtdAgendamentos = DG93Store.getAgendamentos({ id_user: c.id_user }).length;
+          return `
+          <tr>
+            <td>${c.nome}</td>
+            <td>${c.email}</td>
+            <td>${c.cpf}</td>
+            <td>${qtdAgendamentos}</td>
+            <td class="col-actions"><a href="agendamentos.html" class="btn btn-outline btn-sm">Ver agendamentos</a></td>
+          </tr>
+        `;
+        }).join('');
+      }
+
+      document.getElementById('busca-cliente').addEventListener('input', (e) => render(e.target.value));
+      render();
+    }
+  </script>
 </body>
 
 </html>

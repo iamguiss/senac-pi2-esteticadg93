@@ -71,7 +71,42 @@
             </main>
         </div>
     </div>
+    <script src="../assets/js/data/mock-data.js"></script>
+    <script src="../assets/js/data/store.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/components/toast.js"></script>
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script>
+        const usuario = DG93Sidebar.render({ perfil: 'admin', active: 'dashboard' });
 
+        if (usuario) {
+            const todos = DG93Store.getAgendamentos();
+            document.getElementById('stat-total').textContent = todos.length;
+            document.getElementById('stat-pendentes').textContent = todos.filter(a => a.status === 'AGUARDANDO_CONFIRMACAO').length;
+            document.getElementById('stat-andamento').textContent = todos.filter(a => a.status === 'EM_ANDAMENTO').length;
+            document.getElementById('stat-clientes').textContent = DG93Store.getUsuarios({ perfil: 'cliente' }).length;
+
+            const pendentes = todos.filter(a => a.status === 'AGUARDANDO_CONFIRMACAO');
+            document.getElementById('vazio-pendentes').hidden = pendentes.length > 0;
+            document.querySelector('.table-wrap').hidden = pendentes.length === 0;
+
+            document.getElementById('tabela-pendentes').innerHTML = pendentes.map(a => {
+                const cliente = DG93Store.getUsuario(a.id_user);
+                const servico = DG93Store.getServico(a.id_service);
+                return `
+        <tr>
+          <td>${cliente.nome}</td>
+          <td>${servico.nome_servico}</td>
+          <td>${DG93Utils.formatDate(a.data)} · ${a.hora}</td>
+          <td>${a.local}</td>
+          <td>${DG93Utils.statusBadgeHtml(a.status)}</td>
+          <td class="col-actions"><a href="agendamento-detalhes.html?id=${a.id_agendamento}" class="btn btn-outline btn-sm">Analisar</a></td>
+        </tr>
+      `;
+            }).join('');
+        }
+    </script>
 </body>
 
 </html>

@@ -43,7 +43,78 @@
           </main>
         </div>
       </div>
+<script src="../assets/js/data/mock-data.js"></script>
+<script src="../assets/js/data/store.js"></script>
+<script src="../assets/js/utils.js"></script>
+<script src="../assets/js/auth.js"></script>
+<script src="../assets/js/components/toast.js"></script>
+<script src="../assets/js/components/sidebar.js"></script>
+<script>
+  const usuario = DG93Sidebar.render({ perfil: 'cliente', active: 'agendamentos' });
 
+  if (usuario) {
+    const PAGE_SIZE = 4;
+    let paginaAtual = 1;
+
+    const selectStatus = document.getElementById('filtro-status');
+    Object.entries(DG93Utils.STATUS_LABELS).forEach(([valor, label]) => {
+      const opt = document.createElement('option');
+      opt.value = valor; opt.textContent = label;
+      selectStatus.appendChild(opt);
+    });
+
+    function getFiltrados() {
+      const status = selectStatus.value;
+      return DG93Store.getAgendamentos({ id_user: usuario.id_user, status: status || undefined });
+    }
+
+    function renderPagina() {
+      const todos = getFiltrados();
+      const totalPaginas = Math.max(1, Math.ceil(todos.length / PAGE_SIZE));
+      paginaAtual = Math.min(paginaAtual, totalPaginas);
+      const inicio = (paginaAtual - 1) * PAGE_SIZE;
+      const pagina = todos.slice(inicio, inicio + PAGE_SIZE);
+
+      document.getElementById('vazio').hidden = todos.length > 0;
+
+      document.getElementById('lista-agendamentos').innerHTML = pagina.map(a => {
+        const servico = DG93Store.getServico(a.id_service);
+        return `
+          <article class="appointment-card" data-status="${a.status}">
+            <div class="appointment-card__head">
+              <h3>${servico.nome_servico}</h3>
+              ${DG93Utils.statusBadgeHtml(a.status)}
+            </div>
+            <div class="appointment-card__meta">
+              <span><strong>Data:</strong> ${DG93Utils.formatDate(a.data)} às ${a.hora}</span>
+              <span><strong>Local:</strong> ${a.local}</span>
+              <span><strong>Valor:</strong> ${DG93Utils.formatCurrency(servico.preco)}</span>
+            </div>
+            <div class="appointment-card__actions">
+              <a href="agendamento-detalhes.html?id=${a.id_agendamento}" class="btn btn-outline btn-sm">Ver detalhes</a>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      const paginacao = document.getElementById('paginacao');
+      if (totalPaginas <= 1) { paginacao.innerHTML = ''; return; }
+      let botoes = `<button ${paginaAtual === 1 ? 'disabled' : ''} data-p="${paginaAtual - 1}">‹</button>`;
+      for (let p = 1; p <= totalPaginas; p++) {
+        botoes += `<button ${p === paginaAtual ? 'aria-current="page"' : ''} data-p="${p}">${p}</button>`;
+      }
+      botoes += `<button ${paginaAtual === totalPaginas ? 'disabled' : ''} data-p="${paginaAtual + 1}">›</button>`;
+      paginacao.innerHTML = botoes;
+      paginacao.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+        paginaAtual = Number(b.dataset.p);
+        renderPagina();
+      }));
+    }
+
+    selectStatus.addEventListener('change', () => { paginaAtual = 1; renderPagina(); });
+    renderPagina();
+  }
+</script>
 </body>
 
 </html>

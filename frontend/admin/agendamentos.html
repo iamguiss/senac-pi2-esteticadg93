@@ -53,7 +53,73 @@
             </main>
         </div>
     </div>
+    <script src="../assets/js/data/mock-data.js"></script>
+    <script src="../assets/js/data/store.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/components/toast.js"></script>
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script>
+        const usuario = DG93Sidebar.render({ perfil: 'admin', active: 'agendamentos' });
 
+        if (usuario) {
+            const PAGE_SIZE = 6;
+            let paginaAtual = 1;
+
+            const selectStatus = document.getElementById('filtro-status');
+            Object.entries(DG93Utils.STATUS_LABELS).forEach(([valor, label]) => {
+                const opt = document.createElement('option');
+                opt.value = valor; opt.textContent = label;
+                selectStatus.appendChild(opt);
+            });
+
+            function getFiltrados() {
+                return DG93Store.getAgendamentos({ status: selectStatus.value || undefined });
+            }
+
+            function renderPagina() {
+                const todos = getFiltrados();
+                const totalPaginas = Math.max(1, Math.ceil(todos.length / PAGE_SIZE));
+                paginaAtual = Math.min(paginaAtual, totalPaginas);
+                const inicio = (paginaAtual - 1) * PAGE_SIZE;
+                const pagina = todos.slice(inicio, inicio + PAGE_SIZE);
+
+                document.getElementById('vazio').hidden = todos.length > 0;
+                document.querySelector('.table-wrap').hidden = todos.length === 0;
+
+                document.getElementById('tabela-agendamentos').innerHTML = pagina.map(a => {
+                    const cliente = DG93Store.getUsuario(a.id_user);
+                    const servico = DG93Store.getServico(a.id_service);
+                    return `
+          <tr>
+            <td>${cliente.nome}</td>
+            <td>${servico.nome_servico}</td>
+            <td>${DG93Utils.formatDate(a.data)} · ${a.hora}</td>
+            <td>${a.local}</td>
+            <td>${DG93Utils.statusBadgeHtml(a.status)}</td>
+            <td class="col-actions"><a href="agendamento-detalhes.html?id=${a.id_agendamento}" class="btn btn-outline btn-sm">Gerenciar</a></td>
+          </tr>
+        `;
+                }).join('');
+
+                const paginacao = document.getElementById('paginacao');
+                if (totalPaginas <= 1) { paginacao.innerHTML = ''; return; }
+                let botoes = `<button ${paginaAtual === 1 ? 'disabled' : ''} data-p="${paginaAtual - 1}">‹</button>`;
+                for (let p = 1; p <= totalPaginas; p++) {
+                    botoes += `<button ${p === paginaAtual ? 'aria-current="page"' : ''} data-p="${p}">${p}</button>`;
+                }
+                botoes += `<button ${paginaAtual === totalPaginas ? 'disabled' : ''} data-p="${paginaAtual + 1}">›</button>`;
+                paginacao.innerHTML = botoes;
+                paginacao.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+                    paginaAtual = Number(b.dataset.p);
+                    renderPagina();
+                }));
+            }
+
+            selectStatus.addEventListener('change', () => { paginaAtual = 1; renderPagina(); });
+            renderPagina();
+        }
+    </script>
 </body>
 
 </html>

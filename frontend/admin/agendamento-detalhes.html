@@ -48,7 +48,92 @@
             </div>
         </div>
     </div>
+    <script src="../assets/js/data/mock-data.js"></script>
+    <script src="../assets/js/data/store.js"></script>
+    <script src="../assets/js/utils.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/components/toast.js"></script>
+    <script src="../assets/js/components/modal.js"></script>
+    <script src="../assets/js/components/sidebar.js"></script>
+    <script>
+        const usuario = DG93Sidebar.render({ perfil: 'admin', active: 'agendamentos' });
 
+        if (usuario) {
+            const id = DG93Utils.qs('id');
+            const agendamento = id ? DG93Store.getAgendamento(id) : null;
+
+            const PROXIMO_STATUS = {
+                APROVADO: ['EM_ANDAMENTO', 'CANCELADO'],
+                EM_ANDAMENTO: ['CONCLUIDO', 'CANCELADO']
+            };
+
+            if (!agendamento) {
+                document.getElementById('nao-encontrado').hidden = false;
+            } else {
+                renderConteudo(agendamento);
+            }
+
+            function renderConteudo(a) {
+                const cliente = DG93Store.getUsuario(a.id_user);
+                const servico = DG93Store.getServico(a.id_service);
+                const opcoesStatus = PROXIMO_STATUS[a.status] || [];
+
+                document.getElementById('conteudo').innerHTML = `
+        <div class="row-between" style="margin: var(--space-4) 0;">
+          <h2>${servico.nome_servico}</h2>
+          ${DG93Utils.statusBadgeHtml(a.status)}
+        </div>
+
+        <div class="card stack">
+          <div class="row-between"><span class="text-muted">Cliente</span><strong>${cliente.nome}</strong></div>
+          <div class="row-between"><span class="text-muted">E-mail</span><strong>${cliente.email}</strong></div>
+          <div class="row-between"><span class="text-muted">Valor</span><strong>${DG93Utils.formatCurrency(servico.preco)}</strong></div>
+          <div class="row-between"><span class="text-muted">Data</span><strong>${DG93Utils.formatDateLong(a.data)}</strong></div>
+          <div class="row-between"><span class="text-muted">Horário</span><strong>${a.hora}</strong></div>
+          <div class="row-between"><span class="text-muted">Local</span><strong>${DG93Utils.escapeHtml(a.local)}</strong></div>
+        </div>
+
+        ${a.reagendamento_solicitado ? `
+          <div class="alert alert--info" style="margin-top: var(--space-4);">
+            Cliente solicitou reagendamento para <strong>${DG93Utils.formatDate(a.reagendamento_solicitado.data)} às ${a.reagendamento_solicitado.hora}</strong>
+            ${a.reagendamento_solicitado.motivo ? ` — Motivo: "${DG93Utils.escapeHtml(a.reagendamento_solicitado.motivo)}"` : ''}
+          </div>` : ''}
+
+        <div class="row-between" style="margin-top: var(--space-6); flex-wrap:wrap; gap: var(--space-3);">
+          <div style="display:flex; gap: var(--space-3); flex-wrap:wrap;">
+            ${a.status === 'AGUARDANDO_CONFIRMACAO' ? `
+              <button class="btn btn-primary" id="btn-aprovar">Aprovar agendamento</button>
+              <button class="btn btn-danger" id="btn-negar">Negar agendamento</button>
+            ` : ''}
+            ${opcoesStatus.map(s => `<button class="btn btn-outline" data-status="${s}">Marcar como ${DG93Utils.statusLabel(s).toLowerCase()}</button>`).join('')}
+          </div>
+        </div>
+        ${['CONCLUIDO', 'CANCELADO', 'NEGADO'].includes(a.status) ? `<p class="text-muted" style="margin-top: var(--space-4); font-size: var(--fs-caption);">Este agendamento está em um status final e não possui mais ações disponíveis.</p>` : ''}
+      `;
+
+                const btnAprovar = document.getElementById('btn-aprovar');
+                if (btnAprovar) btnAprovar.addEventListener('click', () => atualizarStatus('APROVADO'));
+
+                const btnNegar = document.getElementById('btn-negar');
+                if (btnNegar) btnNegar.addEventListener('click', () => DG93Modal.open('modal-negar'));
+
+                document.querySelectorAll('[data-status]').forEach(b => {
+                    b.addEventListener('click', () => atualizarStatus(b.dataset.status));
+                });
+            }
+
+            function atualizarStatus(status) {
+                DG93Store.atualizarStatusAgendamento(agendamento.id_agendamento, status);
+                DG93Toast.show(`Agendamento marcado como "${DG93Utils.statusLabel(status)}".`, 'success');
+                setTimeout(() => location.reload(), 500);
+            }
+
+            document.getElementById('confirmar-negacao').addEventListener('click', () => {
+                DG93Modal.close('modal-negar');
+                atualizarStatus('NEGADO');
+            });
+        }
+    </script>
 </body>
 
 </html>

@@ -73,15 +73,19 @@
 - [x] Ajustar os HTML para utilização dos scripts
 - [x] Implementar funcionalidades iniciais com dados simulados
 - [x] Implementar validações e interações das páginas públicas
-- [ ] Integrar JavaScript com as páginas da área do cliente
-- [ ] Integrar JavaScript com as páginas da área administrativa
-- [ ] Implementar interações do fluxo de agendamento
-- [ ] Implementar estados e status dos agendamentos
-- [ ] Implementar modais e mensagens
-- [ ] Testar as funcionalidades JavaScript
-- [ ] Corrigir problemas encontrados
-- [ ] Testar novamente após as correções
-- [ ] Preparar frontend para integração com PHP
+- [x] Integrar JavaScript com as páginas da área do cliente
+- [x] Integrar JavaScript com as páginas da área administrativa
+- [x] Implementar interações do fluxo de agendamento
+- [x] Implementar estados e status dos agendamentos
+- [x] Implementar modais e mensagens
+- [x] Testar as funcionalidades JavaScript
+- [x] Corrigir problemas encontrados
+- [x] Testar novamente após as correções
+- [x] Preparar frontend para integração com PHP
+- [x] Novas telas ajustadas
 
 **Resumo:**
 Foi criada a estrutura JavaScript do projeto e os arquivos necessários para as funcionalidades do frontend. As páginas públicas foram ajustadas para utilizar os scripts e foram implementadas as primeiras interações, validações e funcionalidades utilizando dados simulados. A próxima etapa será integrar e desenvolver o JavaScript das áreas do cliente e administrador, finalizando os comportamentos do frontend antes da integração com PHP e MySQL.
+
+**Resumo:**
+Foi desenvolvida e integrada a camada JavaScript do frontend, contemplando as áreas pública, do cliente e administrativa. Foram implementadas validações, interações, fluxo de agendamento, estados dos agendamentos, mensagens, modais e utilização de dados simulados. Após os ajustes, as funcionalidades foram testadas e o frontend foi preparado para a futura integração com PHP e MySQL.
