@@ -428,7 +428,9 @@ fieldset {
 }
 
 /* ---------- Tabelas ---------- */
+
 .table-wrap {
+  width: 120%;
   overflow-x: auto;
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
@@ -436,6 +438,7 @@ fieldset {
 
 .table {
   width: 100%;
+  min-width: 1200px;
   border-collapse: collapse;
   font-size: var(--fs-body);
   background: var(--bg-surface);
