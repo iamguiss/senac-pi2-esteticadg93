@@ -112,14 +112,20 @@ docs/BANCO_DE_DADOS.md
 
 ## 1. Comunicação entre JavaScript e PHP
 
-- [ ] Criar primeiro endpoint PHP
-- [ ] Enviar dados pelo JavaScript
-- [ ] Enviar dados em JSON
-- [ ] Receber JSON no PHP
-- [ ] Processar a requisição
-- [ ] Retornar resposta em JSON
-- [ ] Interpretar resposta no JavaScript
-- [ ] Testar comunicação
+- [x] Criar primeiro endpoint PHP
+- [x] Enviar dados pelo JavaScript
+- [x] Enviar dados em JSON
+- [x] Receber JSON no PHP
+- [x] Processar a requisição
+- [x] Retornar resposta em JSON
+- [x] Interpretar resposta no JavaScript
+- [x] Testar comunicação
+
+### Teste realizado
+
+Foi realizado um teste de comunicação entre JavaScript e PHP utilizando `fetch()` e JSON.
+
+O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando `json_decode()`, processou a informação e retornou uma resposta utilizando `json_encode()`. O JavaScript recebeu e interpretou a resposta utilizando `response.json()`.
 
 ## 2. Usuários
 
