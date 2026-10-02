@@ -4,20 +4,20 @@ require_once "../config/conexao.php";
 $database = new Database();
 $pdo = $database->conectar();
 
-$dados = json_decode(file_get_contents("php://input"), true);
-
-
+$entrada = file_get_contents("php://input");
+$dados = json_decode($entrada, true);
+$senhaHash = password_hash($dados["senha"], PASSWORD_DEFAULT);
 
 $cadastro = $pdo->prepare("INSERT INTO usuarios (nome, email, senha, cpf, sexo, perfil) VALUES (:nome, :email, :senha, :cpf, :sexo, :perfil)");
 
 $cadastro->bindParam(":nome", $dados["nome"]);
 $cadastro->bindParam(":email", $dados["email"]);
-$cadastro->bindParam(":senha", $dados["senha"]);
+$cadastro->bindParam(":senha", $senhaHash);
 $cadastro->bindParam(":cpf", $dados["cpf"]);
 $cadastro->bindParam(":sexo", $dados["sexo"]);
 $cadastro->bindParam(":perfil", $dados["perfil"]);
 
-// $cadastro->execute();
+ $cadastro->execute();
 
 $resposta = [
     "sucesso" => true,

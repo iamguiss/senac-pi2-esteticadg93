@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS
     usuarios (
         id_user INT NOT NULL AUTO_INCREMENT,
         nome VARCHAR(50) NOT NULL,
-        email VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL UNIQUE,
         senha VARCHAR(255) NOT NULL,
         cpf VARCHAR(15) NOT NULL UNIQUE,
         sexo VARCHAR(13),
