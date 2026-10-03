@@ -1,0 +1,8 @@
+$kind: http-request
+description: ""
+url: http://localhost/senac-pi2-esteticadg93/backend/controllers/detalhesAgendamento.php
+method: POST
+body:
+  type: json
+  content: "{\r\n    \"id_agendamento\": 4\r\n}"
+order: 3561549309802677

@@ -129,20 +129,20 @@ O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando 
 
 ## 2. Usuários
 
-- [ ] Cadastro de cliente
-- [ ] Login
-- [ ] Logout
-- [ ] Autenticação
-- [ ] Controle de acesso
-- [ ] Separação entre cliente e administrador
-- [ ] Perfil do usuário
-- [ ] Hash de senha
+- [x] Cadastro de cliente
+- [x] Login
+- [x] Logout
+- [x] Autenticação
+- [x] Controle de acesso
+- [x] Separação entre cliente e administrador
+- [x] Perfil do usuário
+- [x] Hash de senha
 
 ## 3. Serviços
 
-- [ ] Listar serviços
-- [ ] Consultar valores
-- [ ] Cadastrar serviço
+- [x] Listar serviços
+- [x] Consultar valores
+- [x] Cadastrar serviço
 - [ ] Editar serviço
 - [ ] Alterar valores
 - [ ] Ativar serviço
@@ -150,15 +150,15 @@ O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando 
 
 ## 4. Agendamentos
 
-- [ ] Criar agendamento
-- [ ] Selecionar serviço
-- [ ] Selecionar data
-- [ ] Selecionar horário
-- [ ] Verificar disponibilidade
-- [ ] Impedir conflitos de horários
-- [ ] Listar agendamentos
-- [ ] Visualizar detalhes
-- [ ] Cancelar agendamento
+- [x] Criar agendamento
+- [x] Selecionar serviço
+- [x] Selecionar data
+- [x] Selecionar horário
+- [x] Verificar disponibilidade
+- [x] Impedir conflitos de horários
+- [x] Listar agendamentos
+- [x] Visualizar detalhes
+- [x] Cancelar agendamento
 - [ ] Solicitar remarcação
 - [ ] Alterar status do atendimento
 

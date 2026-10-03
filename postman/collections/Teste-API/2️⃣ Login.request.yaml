@@ -1,0 +1,14 @@
+$kind: http-request
+description: ""
+url: http://localhost/senac-pi2-esteticadg93/backend/controllers/login.php
+method: GET
+body:
+  type: json
+  content: "{\r
+
+    \    \"email\": \"final@teste.com\",\r
+
+    \    \"senha\": \"123456\"\r
+
+    }"
+order: 848998202645180

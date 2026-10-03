@@ -6,15 +6,15 @@ fetch("../backend/controllers/usuario.php", {
         "Content-Type": "application/json"
     },
     body: JSON.stringify({
-        nome: "teste3",
-        email: "teste@teste.com",
+        nome: "cliente 1",
+        email: "cliente1@teste.com",
         senha: "123456",
-        cpf: "98765434211",
+        cpf: "1234567890",
         sexo: "M",
         perfil: "cliente"
     })
 })
-.then(resposta => resposta.text())
+.then(resposta => resposta.json())
 .then(dados => {
     console.log("Resposta do PHP:", dados);
 });

@@ -1,0 +1,5 @@
+$kind: http-request
+description: ""
+url: http://localhost/senac-pi2-esteticadg93/backend/controllers/meusAgendamentos.php
+method: GET
+order: 3421498477377377

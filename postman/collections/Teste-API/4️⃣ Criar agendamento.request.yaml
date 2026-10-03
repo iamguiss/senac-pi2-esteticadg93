@@ -1,0 +1,22 @@
+$kind: http-request
+description: ""
+url: http://localhost/senac-pi2-esteticadg93/backend/controllers/cadastrarAgendamento.php
+method: GET
+body:
+  type: json
+  content: "{\r
+
+    \    \"id_user\": 18,\r
+
+    \    \"id_service\": 1,\r
+
+    \    \"status\": \"AGUARDANDO_CONFIRMACAO\",\r
+
+    \    \"data\": \"2026-10-15\",\r
+
+    \    \"hora\": \"10:00\",\r
+
+    \    \"local\": \"Estética DG93\"\r
+
+    }"
+order: 2932537830462577

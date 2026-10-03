@@ -4,7 +4,7 @@ fetch("../backend/controllers/login.php", {
         "Content-Type": "application/json"
     },
     body: JSON.stringify({
-        email: "teste@teste.com",
+        email: "cliente@teste.com",
         senha: "123456"
     })
 })

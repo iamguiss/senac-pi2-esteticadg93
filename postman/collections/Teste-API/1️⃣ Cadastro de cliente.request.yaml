@@ -1,0 +1,22 @@
+$kind: http-request
+description: ""
+url: http://localhost/senac-pi2-esteticadg93/backend/controllers/usuario.php
+method: POST
+body:
+  type: json
+  content: "{\r
+
+    \    \"nome\": \"Cliente Final\",\r
+
+    \    \"email\": \"final@teste.com\",\r
+
+    \    \"senha\": \"123456\",\r
+
+    \    \"cpf\": \"555.666.777-88\",\r
+
+    \    \"sexo\": \"Masculino\",\r
+
+    \    \"perfil\": \"cliente\"\r
+
+    }"
+order: 1791012428219

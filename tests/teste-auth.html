@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Teste Auth</title>
+</head>
+<body>
+
+    <button onclick="testarAuth()">Testar acesso</button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function testarAuth() {
+            fetch("../backend/services/auth.php")
+                .then(resposta => resposta.json())
+                .then(dados => {
+                    document.getElementById("resultado").textContent = dados.mensagem;
+                    console.log(dados);
+                });
+        }
+    </script>
+
+</body>
+</html>
