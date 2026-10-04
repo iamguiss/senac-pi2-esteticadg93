@@ -178,13 +178,13 @@ O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando 
 
 ## 6. Segurança e Tratamento de Erros
 
-- [ ] Utilizar prepared statements
+- [x] Utilizar prepared statements
 - [ ] Validar dados recebidos
-- [ ] Utilizar `password_hash()`
-- [ ] Utilizar `password_verify()`
-- [ ] Controlar acesso às áreas do sistema
-- [ ] Implementar sessões
-- [ ] Implementar logout
+- [x] Utilizar `password_hash()`
+- [x] Utilizar `password_verify()`
+- [x] Controlar acesso às áreas do sistema
+- [x] Implementar sessões
+- [x] Implementar logout
 - [ ] Implementar tratamento de erros
 - [ ] Padronizar respostas JSON
 - [ ] Definir códigos HTTP apropriados
