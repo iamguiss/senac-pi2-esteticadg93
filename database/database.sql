@@ -85,6 +85,7 @@ VALUES
 (2, 5, 'CANCELADO', '2026-10-14', '16:00:00', 'Estética DG93');
 
 
+
 -- CONSULTA PARA TESTE
 
 SELECT
@@ -101,3 +102,50 @@ JOIN usuarios
     ON agendamento.id_user = usuarios.id_user
 JOIN servicos
     ON agendamento.id_service = servicos.id_service;
+
+
+-- CONSULTA QUANTIDADES PARA DASHBOARD
+    
+    -- Total de clientes
+SELECT COUNT(*)
+FROM usuarios
+WHERE perfil = 'cliente';
+
+    -- Serviços ativos
+SELECT COUNT(*)
+FROM servicos
+WHERE ativo = 1;
+
+    -- Total de agendamentos
+SELECT COUNT(*)
+FROM agendamento;
+
+SELECT COUNT(*)
+FROM agendamento
+WHERE status = 'AGUARDANDO_CONFIRMACAO';
+
+SELECT COUNT(*)
+FROM agendamento
+WHERE status = 'APROVADO';
+
+SELECT COUNT(*)
+FROM agendamento
+WHERE status = 'EM_ANDAMENTO';
+
+SELECT COUNT(*)
+FROM agendamento
+WHERE status = 'CONCLUIDO';
+
+SELECT COUNT(*)
+FROM agendamento
+WHERE status = 'NEGADO';
+
+SELECT COUNT(*)
+FROM agendamento
+WHERE status = 'CANCELADO';
+
+-- Cliente
+
+SELECT COUNT(*) as total_agendamentos
+FROM agendamento
+WHERE agendamento.id_user = :id_user;

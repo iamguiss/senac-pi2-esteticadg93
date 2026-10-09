@@ -21,26 +21,37 @@ $perfil = $_SESSION["perfil"];
 
 if ($perfil === "admin") {
     $id_agendamento = $dados["id_agendamento"];
-    $status = $dados["status"];
+    $novoStatus = $dados["status"];
 
 
-    $status = $pdo->prepare(
+    $consultaStatus  = $pdo->prepare(
         "SELECT status 
         FROM agendamento
         WHERE id_agendamento = :id_agendamento"
     );
-    $status->execute([
+    $consultaStatus->execute([
         ":id_agendamento" => $id_agendamento
     ]);
-    $statusAtual = $status->fetch(PDO::FETCH_ASSOC);
+    $statusAtual = $consultaStatus->fetch(PDO::FETCH_ASSOC);
 
+    if (!$statusAtual) {
+        echo json_encode([
+            "sucesso" => false,
+            "mensagem" => "Agendamento não encontrado"
+        ]);
+        exit();
+    }
+    $resposta = [
+        "sucesso" => false,
+        "mensagem" => "Não é permitido alterar o status"
+    ];
 
     switch ($statusAtual["status"]) {
         case "AGUARDANDO_CONFIRMACAO":
             if (
-                $status === "APROVADO" ||
-                $status === "NEGADO" ||
-                $status === "CANCELADO"
+                $novoStatus  === "APROVADO" ||
+                $novoStatus  === "NEGADO" ||
+                $novoStatus  === "CANCELADO"
             ) {
                 $alterarStatus = $pdo->prepare(
                     "UPDATE agendamento
@@ -50,7 +61,7 @@ if ($perfil === "admin") {
                 );
                 $alterarStatus->execute([
                     ":id_agendamento" => $id_agendamento,
-                    ":status" => $status
+                    ":status" => $novoStatus
                 ]);
                 if ($alterarStatus->rowCount() > 0) {
                     $resposta = [
@@ -68,8 +79,8 @@ if ($perfil === "admin") {
 
         case "APROVADO":
             if (
-                $status === "EM_ANDAMENTO" ||
-                $status === "CANCELADO"
+                $novoStatus  === "EM_ANDAMENTO" ||
+                $novoStatus  === "CANCELADO"
             ) {
                 $alterarStatus = $pdo->prepare(
                     "UPDATE agendamento
@@ -79,7 +90,7 @@ if ($perfil === "admin") {
                 );
                 $alterarStatus->execute([
                     ":id_agendamento" => $id_agendamento,
-                    ":status" => $status
+                    ":status" => $novoStatus
                 ]);
                 if ($alterarStatus->rowCount() > 0) {
                     $resposta = [
@@ -97,8 +108,8 @@ if ($perfil === "admin") {
 
         case "EM_ANDAMENTO":
             if (
-                $status === "CONCLUIDO" ||
-                $status === "CANCELADO"
+                $novoStatus  === "CONCLUIDO" ||
+                $novoStatus  === "CANCELADO"
             ) {
                 $alterarStatus = $pdo->prepare(
                     "UPDATE agendamento
@@ -108,7 +119,7 @@ if ($perfil === "admin") {
                 );
                 $alterarStatus->execute([
                     ":id_agendamento" => $id_agendamento,
-                    ":status" => $status
+                    ":status" => $novoStatus
                 ]);
                 if ($alterarStatus->rowCount() > 0) {
                     $resposta = [
