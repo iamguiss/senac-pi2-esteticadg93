@@ -1,9 +1,9 @@
 <?php
+
+header("Content-Type: application/json; charset=UTF-8");
+
 require_once "../config/conexao.php";
-
-$database = new Database();
-$pdo = $database->conectar();
-
+require_once "../models/Usuario.php";
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
     echo json_encode([
@@ -15,31 +15,41 @@ if ($_SERVER["REQUEST_METHOD"] !== "POST") {
 
 $entrada = file_get_contents("php://input");
 $dados = json_decode($entrada, true);
-$senhaHash = password_hash($dados["senha"], PASSWORD_DEFAULT);
 
-
-if (!$dados) {
+if (!is_array($dados)) {
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Nenhum dado JSON recebido"
+        "mensagem" => "Nenhum dado JSON válido recebido"
     ]);
     exit;
 }
 
-$cadastro = $pdo->prepare("INSERT INTO usuarios (nome, email, senha, cpf, sexo, perfil) VALUES (:nome, :email, :senha, :cpf, :sexo, :perfil)");
+$database = new Database();
+$pdo = $database->conectar();
 
-$cadastro->bindParam(":nome", $dados["nome"]);
-$cadastro->bindParam(":email", $dados["email"]);
-$cadastro->bindParam(":senha", $senhaHash);
-$cadastro->bindParam(":cpf", $dados["cpf"]);
-$cadastro->bindParam(":sexo", $dados["sexo"]);
-$cadastro->bindParam(":perfil", $dados["perfil"]);
+$cadastrarUsuario = new Usuario($pdo);
 
-$cadastro->execute();
+try {
+    $idUsuario = $cadastrarUsuario->cadastrar(
+        $dados["nome"],
+        $dados["email"],
+        $dados["senha"],
+        $dados["cpf"],
+        $dados["sexo"] ?? null,
+        "cliente"
+    );
 
-$resposta = [
-    "sucesso" => true,
-    "mensagem" => "Usuário cadastrado com sucesso"
-];
+    echo json_encode([
+        "sucesso" => true,
+        "mensagem" => "Usuário cadastrado com sucesso",
+        "id_usuario" => $idUsuario
+    ]);
 
-echo json_encode($resposta);
+} catch (PDOException $e) {
+    http_response_code(400);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Não foi possível cadastrar o usuário"
+    ]);
+}

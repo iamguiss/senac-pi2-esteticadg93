@@ -1,21 +1,21 @@
 <?php
 
 require_once "../config/conexao.php";
+require_once "../models/Servico.php";
 
 
 $database = new Database();
 
 $pdo = $database->conectar();
 
-$consulta = $pdo->query("SELECT * FROM servicos");
+$consultar = new Servico($pdo);
+$servicos = $consultar->listarTodos();
 
-$servicos = $consulta->fetchAll(PDO::FETCH_ASSOC);
-
-$servicos = [
+$resposta = [
     "sucesso" => true,
     "mensagem" => "Serviços recebidos com sucesso",
     "servicos" => $servicos
 ];
 
-echo json_encode($servicos);
+echo json_encode($resposta);
 

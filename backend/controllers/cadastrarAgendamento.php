@@ -1,52 +1,51 @@
 <?php
+session_start();
+header("Content-Type: application/json; charset=UTF-8");
 
 require_once "../config/conexao.php";
-
-$database = new Database();
-$pdo = $database->conectar();
-$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+require_once "../models/Agendamento.php";
 
 $entrada = file_get_contents("php://input");
 $dados = json_decode($entrada, true);
 
+$database = new Database();
+$pdo = $database->conectar();
 
-//Consultar se o horario já está ocupado
-$verificarHorario = $pdo->prepare(
-    "SELECT * 
-    FROM agendamento 
-    WHERE data = :data 
-    AND hora = :hora");
-$verificarHorario->bindParam(":data", $dados["data"], PDO::PARAM_STR);
-$verificarHorario->bindParam(":hora", $dados["hora"], PDO::PARAM_STR);
-$verificarHorario->execute();
+$consultar = new Agendamento($pdo);
+$verificarHorario = $consultar->verificarHorario(
+    $dados["data"],
+    $dados["hora"]
+);
+$horarioOcupado = $verificarHorario;
 
-$horarioOcupado = $verificarHorario->fetch(PDO::FETCH_ASSOC);
+try {
+    if ($horarioOcupado) {
+        $resposta = [
+            "sucesso" => false,
+            "mensagem" => "O horário já está ocupado"
+        ];
+        echo json_encode($resposta);
+        exit();
+    } else {
+        $AgendamentoID = $consultar->cadastrarAgendamento(
+            $_SESSION["id_user"],
+            $dados["id_service"],
+            "AGUARDANDO_CONFIRMACAO",
+            $dados["data"],
+            $dados["hora"],
+            $dados["local"]
+        );
+        $resposta = [
+            "sucesso" => true,
+            "mensagem" => "Agendamento cadastrado com sucesso"
+        ];
+        echo json_encode($resposta);
+    }
+} catch (Exception $e) {
+    http_response_code(400);
 
-if ($horarioOcupado) {
-    $resposta = [
+    echo json_encode([
         "sucesso" => false,
-        "mensagem" => "O horário já está ocupado"
-    ];
-    echo json_encode($resposta);
-    exit();
-} else {
-
-    // registrar um agendamento no banco de dados caso o horário esteja disponível
-    $cadastrarAgendamento = $pdo->prepare("INSERT INTO agendamento (id_user, id_service, status, data, hora, local) VALUES (:id_user, :id_service, :status, :data, :hora, :local)");
-
-    $cadastrarAgendamento->bindParam(":id_user", $dados["id_user"], PDO::PARAM_INT);
-    $cadastrarAgendamento->bindParam(":id_service", $dados["id_service"], PDO::PARAM_INT);
-    $cadastrarAgendamento->bindParam(":status", $dados["status"], PDO::PARAM_STR);
-    $cadastrarAgendamento->bindParam(":data", $dados["data"], PDO::PARAM_STR);
-    $cadastrarAgendamento->bindParam(":hora", $dados["hora"], PDO::PARAM_STR);
-    $cadastrarAgendamento->bindParam(":local", $dados["local"], PDO::PARAM_STR);
-
-    $cadastrarAgendamento->execute();
+        "mensagem" => "Não foi possível cadastrar o usuário"
+    ]);
 }
-
-$resposta = [
-    "sucesso" => true,
-    "mensagem" => "Agendamento cadastrado com sucesso"
-];
-
-echo json_encode($resposta);
