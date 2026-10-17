@@ -1,0 +1,9 @@
+RewriteEngine On
+
+# Abre a página inicial do frontend sem mudar a URL
+RewriteRule ^$ frontend/index.html [L]
+
+# Direciona páginas e arquivos do frontend internamente
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.+)$ frontend/$1 [L]
