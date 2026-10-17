@@ -1,3 +1,5 @@
+DROP DATABASE estetica_dg93;
+
 CREATE DATABASE IF NOT EXISTS estetica_dg93;
 
 USE estetica_dg93;
@@ -35,31 +37,28 @@ CREATE TABLE IF NOT EXISTS agendamento (
     FOREIGN KEY (id_service) REFERENCES servicos(id_service)
 );
 
--- USUÁRIOS DE TESTE
+-- ==========================================
+-- 10 USUÁRIOS DE TESTE
+-- ==========================================
 
 INSERT INTO usuarios
 (nome, email, senha, cpf, sexo, perfil)
 VALUES
-(
-    'Guilherme',
-    'admin@teste.com',
-    '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.',
-    '123.456.789-00',
-    'Masculino',
-    'admin'
-),
-(
-    'Cliente Teste',
-    'cliente@teste.com',
-    '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.',
-    '111.222.333-44',
-    'Masculino',
-    'cliente'
-);
+('Guilherme Admin', 'admin@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '555.666.777-88', 'Masculino', 'admin'),
+('Cliente 01', 'cliente01@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '111.222.333-44', 'Masculino', 'cliente'),
+('Cliente 02', 'cliente02@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '222.333.444-55', 'Feminino', 'cliente'),
+('Cliente 03', 'cliente03@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '333.444.555-66', 'Masculino', 'cliente'),
+('Cliente 04', 'cliente04@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '444.555.666-77', 'Feminino', 'cliente'),
+('Cliente 05', 'cliente05@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '666.777.888-99', 'Masculino', 'cliente'),
+('Cliente 06', 'cliente06@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '777.888.999-00', 'Feminino', 'cliente'),
+('Cliente 07', 'cliente07@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '888.999.000-11', 'Masculino', 'cliente'),
+('Cliente 08', 'cliente08@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '999.000.111-22', 'Feminino', 'cliente'),
+('Cliente 09', 'cliente09@teste.com', '$2y$12$Kfv4NBe0Z4p4geg..NJ9QuCj248SGjKdajzftDHF3W32e4C8r2g4.', '000.111.222-33', 'Masculino', 'cliente');
 
 
--- SERVIÇOS DE TESTE
-
+-- ==========================================
+-- 10 SERVIÇOS DE TESTE
+-- ==========================================
 
 INSERT INTO servicos
 (nome_servico, preco, ativo, categoria)
@@ -69,83 +68,30 @@ VALUES
 ('Polimento', 350.00, 1, 'Estética'),
 ('Enceramento', 150.00, 1, 'Estética'),
 ('Higienização de Estofados', 180.00, 1, 'Estofados'),
-('Lavagem de Moto', 60.00, 0, 'Motocicleta');
+('Lavagem de Moto', 60.00, 0, 'Motocicleta'),
+('Lavagem Simples', 50.00, 1, 'Lavagem'),
+('Cristalização de Pintura', 280.00, 1, 'Estética'),
+('Limpeza de Motor', 120.00, 1, 'Limpeza'),
+('Revitalização de Plásticos', 100.00, 1, 'Estética');
 
 
--- AGENDAMENTOS DE TESTE
+-- ==========================================
+-- 10 AGENDAMENTOS DE TESTE
+-- ==========================================
 
 
 INSERT INTO agendamento
 (id_user, id_service, status, data, hora, local)
 VALUES
-(2, 1, 'AGUARDANDO_CONFIRMACAO', '2026-10-10', '14:00:00', 'Estética DG93'),
-(2, 2, 'APROVADO', '2026-10-11', '10:00:00', 'Estética DG93'),
-(2, 3, 'EM_ANDAMENTO', '2026-10-12', '15:00:00', 'Estética DG93'),
-(2, 4, 'CONCLUIDO', '2026-10-13', '09:00:00', 'Estética DG93'),
-(2, 5, 'CANCELADO', '2026-10-14', '16:00:00', 'Estética DG93');
+(2, 1, 'AGUARDANDO_CONFIRMACAO', '2026-10-20', '09:00:00', 'Estética DG93'),
+(3, 2, 'APROVADO',               '2026-10-20', '10:00:00', 'Estética DG93'),
+(4, 3, 'EM_ANDAMENTO',           '2026-10-20', '11:00:00', 'Estética DG93'),
+(5, 4, 'CONCLUIDO',              '2026-10-20', '12:00:00', 'Estética DG93'),
+(6, 5, 'CANCELADO',              '2026-10-20', '13:00:00', 'Estética DG93'),
+(7, 6, 'NEGADO',                 '2026-10-21', '09:00:00', 'Estética DG93'),
+(8, 7, 'AGUARDANDO_CONFIRMACAO', '2026-10-21', '10:00:00', 'Estética DG93'),
+(9, 8, 'APROVADO',               '2026-10-21', '11:00:00', 'Estética DG93'),
+(10, 9, 'EM_ANDAMENTO',          '2026-10-21', '14:00:00', 'Estética DG93'),
+(2, 10, 'CONCLUIDO',              '2026-10-21', '15:00:00', 'Estética DG93');
 
 
-
--- CONSULTA PARA TESTE
-
-SELECT
-    agendamento.id_agendamento,
-    usuarios.nome,
-    servicos.nome_servico,
-    servicos.preco,
-    agendamento.status,
-    agendamento.data,
-    agendamento.hora,
-    agendamento.local
-FROM agendamento
-JOIN usuarios
-    ON agendamento.id_user = usuarios.id_user
-JOIN servicos
-    ON agendamento.id_service = servicos.id_service;
-
-
--- CONSULTA QUANTIDADES PARA DASHBOARD
-    
-    -- Total de clientes
-SELECT COUNT(*)
-FROM usuarios
-WHERE perfil = 'cliente';
-
-    -- Serviços ativos
-SELECT COUNT(*)
-FROM servicos
-WHERE ativo = 1;
-
-    -- Total de agendamentos
-SELECT COUNT(*)
-FROM agendamento;
-
-SELECT COUNT(*)
-FROM agendamento
-WHERE status = 'AGUARDANDO_CONFIRMACAO';
-
-SELECT COUNT(*)
-FROM agendamento
-WHERE status = 'APROVADO';
-
-SELECT COUNT(*)
-FROM agendamento
-WHERE status = 'EM_ANDAMENTO';
-
-SELECT COUNT(*)
-FROM agendamento
-WHERE status = 'CONCLUIDO';
-
-SELECT COUNT(*)
-FROM agendamento
-WHERE status = 'NEGADO';
-
-SELECT COUNT(*)
-FROM agendamento
-WHERE status = 'CANCELADO';
-
--- Cliente
-
-SELECT COUNT(*) as total_agendamentos
-FROM agendamento
-WHERE agendamento.id_user = :id_user;

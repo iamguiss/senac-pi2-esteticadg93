@@ -31,7 +31,8 @@ class Agendamento
         $sql = "SELECT * 
                 FROM agendamento 
                 WHERE data = :data 
-                AND hora = :hora";
+                AND hora = :hora
+                AND status NOT IN ('CANCELADO', 'NEGADO')";
         $stmt = $this->pdo->prepare($sql);
         $stmt->bindParam(":data", $data, PDO::PARAM_STR);
         $stmt->bindParam(":hora", $hora, PDO::PARAM_STR);
@@ -54,4 +55,56 @@ class Agendamento
         return $this->pdo->lastInsertId();
     }
 
+    public function cancelarAgendamento($perfil, $id_user, $id_agendamento)
+    {
+        if ($perfil === "cliente") {
+            $sql = "UPDATE agendamento 
+                    SET status = 'CANCELADO' 
+                    WHERE id_agendamento = :id_agendamento 
+                    AND id_user = :id_user";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+            $stmt->bindParam(":id_user", $id_user, PDO::PARAM_INT);
+            $stmt->execute();
+        } elseif ($perfil === "admin") {
+            $sqlAdmin = "UPDATE agendamento 
+                SET status = 'CANCELADO'
+                WHERE id_agendamento = :id_agendamento";
+            $stmt = $this->pdo->prepare($sqlAdmin);
+            $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+            $stmt->execute();
+        } else {
+            return false;
+        }
+        return $stmt->rowCount() > 0;
+    }
+
+    public function verificarDisponibilidade($data, $hora, $id_agendamento)
+    {
+        $sql = "SELECT * FROM agendamento
+                WHERE data = :data
+                AND hora = :hora
+                AND id_agendamento != :id_agendamento
+                AND status NOT IN ('CANCELADO', 'NEGADO')";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(":data", $data, PDO::PARAM_STR);
+        $stmt->bindParam(":hora", $hora, PDO::PARAM_STR);
+        $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function remarcarAgendamento($data, $hora, $id_agendamento, $id_user)
+    {
+        $sql = "UPDATE agendamento
+        SET data = :data, hora = :hora
+        WHERE id_agendamento = :id_agendamento AND id_user = :id_user";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(":data", $data, PDO::PARAM_STR);
+        $stmt->bindParam(":hora", $hora, PDO::PARAM_STR);
+        $stmt->bindParam(":id_user", $id_user, PDO::PARAM_INT);
+        $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+        $resultado = $stmt->execute();
+        return $resultado;
+    }
 }

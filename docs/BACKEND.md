@@ -159,7 +159,7 @@ O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando 
 - [x] Listar agendamentos
 - [x] Visualizar detalhes
 - [x] Cancelar agendamento
-- [ ] Solicitar remarcação
+- [x] Solicitar remarcação
 - [ ] Alterar status do atendimento
 
 ## 5. Área Administrativa
@@ -180,8 +180,8 @@ O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando 
 
 - [x] Utilizar prepared statements
 - [ ] Validar dados recebidos
-- [x] Utilizar `password_hash()`
-- [x] Utilizar `password_verify()`
+- [x] Utilizar password_hash()
+- [x] Utilizar password_verify()
 - [x] Controlar acesso às áreas do sistema
 - [x] Implementar sessões
 - [x] Implementar logout
