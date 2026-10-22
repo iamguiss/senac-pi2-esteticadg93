@@ -12,14 +12,14 @@ class Agendamento
     public function consultarAgendamentos()
     {
         $consulta = $this->pdo->query(
-            "SELECT 
-            agendamento.id_agendamento, 
-            usuarios.nome, servicos.nome_servico, 
+            "SELECT
+            agendamento.id_agendamento,
+            usuarios.nome, servicos.nome_servico,
             servicos.preco, agendamento.status,
-            agendamento.data, 
-            agendamento.hora, 
-            agendamento.local 
-            FROM agendamento 
+            agendamento.data,
+            agendamento.hora,
+            agendamento.local
+            FROM agendamento
             JOIN usuarios ON agendamento.id_user = usuarios.id_user 
             JOIN servicos ON agendamento.id_service = servicos.id_service"
         );
@@ -28,9 +28,9 @@ class Agendamento
 
     public function verificarHorario($data, $hora)
     {
-        $sql = "SELECT * 
-                FROM agendamento 
-                WHERE data = :data 
+        $sql = "SELECT *
+                FROM agendamento
+                WHERE data = :data
                 AND hora = :hora
                 AND status NOT IN ('CANCELADO', 'NEGADO')";
         $stmt = $this->pdo->prepare($sql);
@@ -106,5 +106,88 @@ class Agendamento
         $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
         $resultado = $stmt->execute();
         return $resultado;
+    }
+
+    public function consultarStatus($id_agendamento)
+    {
+        $sql = "SELECT status
+            FROM agendamento
+            WHERE id_agendamento = :id_agendamento";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+        $stmt->execute();
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function alterarStatus($status, $id_agendamento)
+    {
+        $sql =
+            "UPDATE agendamento
+            SET status = :status
+            WHERE id_agendamento = :id_agendamento";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->bindParam(":status", $status, PDO::PARAM_STR);
+        $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+        $resultado = $stmt->execute();
+        return $resultado;
+    }
+    public function statusAtual($id_agendamento, $novoStatus)
+    {
+        $statusAtual = $this->consultarStatus($id_agendamento);
+        if (!$statusAtual) {
+            return false;
+        }
+
+        switch ($statusAtual["status"]) {
+            case "AGUARDANDO_CONFIRMACAO":
+                if (
+                    $novoStatus === "APROVADO" ||
+                    $novoStatus === "NEGADO" ||
+                    $novoStatus === "CANCELADO"
+                ) {
+                    $resultado = $this->alterarStatus(
+                        $novoStatus,
+                        $id_agendamento
+                    );
+                    return $resultado;
+                }
+                break;
+            case "APROVADO":
+                if (
+                    $novoStatus === "EM_ANDAMENTO" ||
+                    $novoStatus === "CANCELADO"
+                ) {
+                    $resultado = $this->alterarStatus(
+                        $novoStatus,
+                        $id_agendamento
+                    );
+                    return $resultado;
+                }
+                break;
+            case "EM_ANDAMENTO":
+                if (
+                    $novoStatus === "CONCLUIDO" ||
+                    $novoStatus === "CANCELADO"
+                ) {
+                    $resultado = $this->alterarStatus(
+                        $novoStatus,
+                        $id_agendamento
+                    );
+                    return $resultado;
+                }
+                break;
+            case "CONCLUIDO":
+
+                break;
+            case "CANCELADO":
+
+                break;
+            case "NEGADO":
+
+                break;
+        }
+        return false;
     }
 }

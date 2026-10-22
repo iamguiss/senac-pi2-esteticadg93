@@ -143,10 +143,10 @@ O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando 
 - [x] Listar serviços
 - [x] Consultar valores
 - [x] Cadastrar serviço
-- [ ] Editar serviço
-- [ ] Alterar valores
-- [ ] Ativar serviço
-- [ ] Desativar serviço
+- [x] Editar serviço
+- [x] Alterar valores
+- [x] Ativar serviço
+- [x] Desativar serviço
 
 ## 4. Agendamentos
 
@@ -160,34 +160,34 @@ O JavaScript enviou dados em JSON para o PHP. O PHP recebeu os dados utilizando 
 - [x] Visualizar detalhes
 - [x] Cancelar agendamento
 - [x] Solicitar remarcação
-- [ ] Alterar status do atendimento
+- [x] Alterar status do atendimento
 
 ## 5. Área Administrativa
 
 - [ ] Dashboard com dados reais
 - [ ] Visualizar clientes
 - [ ] Consultar informações dos clientes
-- [ ] Gerenciar serviços
-- [ ] Cadastrar serviços
-- [ ] Editar serviços
-- [ ] Ativar/desativar serviços
-- [ ] Gerenciar valores
+- [x] Gerenciar serviços
+- [x] Cadastrar serviços
+- [x] Editar serviços
+- [x] Ativar/desativar serviços
+- [x] Gerenciar valores
 - [ ] Visualizar agendamentos
 - [ ] Gerenciar agendamentos
-- [ ] Alterar status dos atendimentos
+- [x] Alterar status dos atendimentos
 
 ## 6. Segurança e Tratamento de Erros
 
 - [x] Utilizar prepared statements
-- [ ] Validar dados recebidos
-- [x] Utilizar password_hash()
-- [x] Utilizar password_verify()
+- [ ] Validar dados recebidos em todos os Controllers
+- [x] Utilizar `password_hash()`
+- [x] Utilizar `password_verify()`
 - [x] Controlar acesso às áreas do sistema
 - [x] Implementar sessões
 - [x] Implementar logout
-- [ ] Implementar tratamento de erros
+- [ ] Implementar tratamento de erros em todo o sistema
 - [ ] Padronizar respostas JSON
-- [ ] Definir códigos HTTP apropriados
+- [ ] Definir códigos HTTP apropriados em todos os Controllers
 - [ ] Avaliar necessidade de configuração de CORS
 
 # Integração com o Frontend
