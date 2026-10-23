@@ -2,14 +2,15 @@
 
 session_start();
 
-require_once "../config/conexao.php";
+header("Content-Type: application/json; charset=UTF-8");
 
-$database = new Database();
-$pdo = $database->conectar();
+require_once "../config/conexao.php";
+require_once "../models/Servico.php";
 
 
 $entrada = file_get_contents("php://input");
-$dados = json_decode($entrada, true);;
+$dados = json_decode($entrada, true);
+;
 
 if (!isset($_SESSION["perfil"])) {
     echo json_encode([
@@ -20,6 +21,44 @@ if (!isset($_SESSION["perfil"])) {
 }
 
 $perfil = $_SESSION["perfil"];
+
+
+
+
+try {
+    $database = new Database();
+    $pdo = $database->conectar();
+
+    $servicoEditar = new Servico($pdo);
+
+
+    if ($perfil == "admin") {
+        $editarServico = $servicoEditar->editarServico(
+            $dados["id_service"],
+            $dados["nome_servico"],
+            $dados["preco"],
+            $dados["categoria"]
+        );
+
+        http_response_code(201);
+
+        echo json_encode([
+            "sucesso" => true,
+            "mensagem" => "Serviço editado com sucesso",
+            "id_servico" => $editarServico
+        ]);
+
+    }
+    exit();
+
+} catch (PDOException $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao editar  serviço"
+    ]);
+}
 
 if ($perfil === "admin") {
 
