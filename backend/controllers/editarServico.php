@@ -23,8 +23,6 @@ if (!isset($_SESSION["perfil"])) {
 $perfil = $_SESSION["perfil"];
 
 
-
-
 try {
     $database = new Database();
     $pdo = $database->conectar();

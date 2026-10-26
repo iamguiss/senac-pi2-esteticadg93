@@ -190,4 +190,61 @@ class Agendamento
         }
         return false;
     }
+
+    public function consultarMeusAgendamento($id_user)
+    {
+        $consulta = $this->pdo->prepare(
+            "SELECT
+            agendamento.id_agendamento,
+            usuarios.nome,
+            servicos.nome_servico,
+            servicos.preco,
+            agendamento.status,
+            agendamento.data,
+            agendamento.hora,
+            agendamento.local
+        FROM agendamento
+        JOIN usuarios
+            ON agendamento.id_user = usuarios.id_user
+        JOIN servicos
+            ON agendamento.id_service = servicos.id_service
+        WHERE agendamento.id_user = :id_user"
+        );
+
+        $consulta->execute([
+            ":id_user" => $id_user
+        ]);
+
+        return $consulta->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
+    public function detalhesAgendamentos($id_user, $id_agendamento)
+    {
+        $consulta = $this->pdo->prepare(
+            "SELECT
+            agendamento.id_agendamento,
+            usuarios.nome,
+            servicos.nome_servico,
+            servicos.preco,
+            agendamento.status,
+            agendamento.data,
+            agendamento.hora,
+            agendamento.local
+        FROM agendamento
+        JOIN usuarios
+            ON agendamento.id_user = usuarios.id_user
+        JOIN servicos
+            ON agendamento.id_service = servicos.id_service
+        WHERE agendamento.id_agendamento = :id_agendamento
+        AND agendamento.id_user = :id_user"
+        );
+
+        $consulta->execute([
+            ":id_user" => $id_user,
+            ":id_agendamento" => $id_agendamento
+        ]);
+
+        return $consulta->fetch(PDO::FETCH_ASSOC);
+    }
 }

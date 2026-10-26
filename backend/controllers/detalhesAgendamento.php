@@ -1,38 +1,71 @@
 <?php
 
 session_start();
-require_once "../config/conexao.php";
 
-$database = new Database();
-$pdo = $database->conectar();
+header("Content-Type: application/json; charset=UTF-8");
+
+if (!isset($_SESSION["id_user"])) {
+    http_response_code(401);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Usuário não está logado"
+    ]);
+    exit();
+}
 
 $idUsuario = $_SESSION["id_user"];
 
 $entrada = file_get_contents("php://input");
 $dados = json_decode($entrada, true);
 
-$idAgendamento = $dados["id_agendamento"];
+if (!is_array($dados) || !isset($dados["id_agendamento"]) || !filter_var($dados["id_agendamento"], FILTER_VALIDATE_INT) || (int) $dados["id_agendamento"] <= 0) {
+    http_response_code(400);
 
-$consultarAgendamento = $pdo->prepare(
-    "SELECT 
-    agendamento.id_agendamento, 
-    usuarios.nome, servicos.nome_servico, 
-    servicos.preco, agendamento.status,
-    agendamento.data, 
-    agendamento.hora, 
-    agendamento.local 
-    FROM agendamento 
-    JOIN usuarios ON agendamento.id_user = usuarios.id_user 
-    JOIN servicos ON agendamento.id_service = servicos.id_service
-    WHERE agendamento.id_agendamento = :id_agendamento 
-    AND agendamento.id_user = :id_user"
-);
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "ID do agendamento inválido"
+    ]);
+    exit();
+}
 
-$consultarAgendamento->bindParam(":id_agendamento", $idAgendamento);
-$consultarAgendamento->bindParam(":id_user", $idUsuario);
+$idAgendamento = (int) $dados["id_agendamento"];
 
-$consultarAgendamento->execute();
+try {
+    require_once "../config/conexao.php";
+    require_once "../models/Agendamento.php";
 
-$agendamento  = $consultarAgendamento->fetch(PDO::FETCH_ASSOC);    
+    $database = new Database();
+    $pdo = $database->conectar();
 
-echo json_encode($agendamento);
+    $detalhesAgendamentos = new Agendamento($pdo);
+    $detalhes = $detalhesAgendamentos->detalhesAgendamentos(
+        $idAgendamento,
+        $idUsuario
+    );
+
+    if (!$detalhes) {
+        http_response_code(404);
+
+        echo json_encode([
+            "sucesso" => false,
+            "mensagem" => "Agendamento não encontrado"
+        ]);
+        exit();
+    }
+
+    http_response_code(200);
+
+    echo json_encode([
+        "sucesso" => true,
+        "detalhes" => $detalhes
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao consultar os detalhes"
+    ]);
+}
