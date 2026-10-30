@@ -1,43 +1,136 @@
+
 <?php
 
-require_once "../config/conexao.php";
+session_start();
 
-$database = new Database();
-$pdo = $database->conectar();
+header("Content-Type: application/json; charset=UTF-8");
 
 if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
+
     echo json_encode([
         "sucesso" => false,
         "mensagem" => "Este endpoint aceita apenas POST"
     ]);
-    exit;
+    exit();
+}
+
+if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
+    http_response_code(401);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Usuário não está logado"
+    ]);
+    exit();
+}
+
+if ($_SESSION["perfil"] !== "admin") {
+    http_response_code(403);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Acesso negado"
+    ]);
+    exit();
 }
 
 $entrada = file_get_contents("php://input");
-$dados = json_decode($entrada, true);;
+$dados = json_decode($entrada, true);
 
-if (!$dados) {
+if (
+    !is_array($dados) ||
+    !isset(
+        $dados["nome_servico"],
+        $dados["preco"],
+        $dados["ativo"],
+        $dados["categoria"]
+    )
+) {
+    http_response_code(400);
+
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Nenhum dado JSON recebido"
+        "mensagem" => "Dados incompletos ou inválidos"
     ]);
-    exit;
+    exit();
 }
 
+if (
+    !is_string($dados["nome_servico"]) ||
+    !is_string($dados["categoria"]) ||
+    (!is_string($dados["preco"]) && !is_numeric($dados["preco"])) ||
+    !in_array($dados["ativo"], [0, 1, "0", "1"], true)
+) {
+    http_response_code(400);
 
-$cadastrarServico = $pdo->prepare("INSERT INTO servicos (nome_servico, preco, ativo, categoria) VALUES (:nome_servico, :preco, :ativo, :categoria)");
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Verifique os dados informados"
+    ]);
+    exit();
+}
 
+$nome = trim($dados["nome_servico"]);
+$categoria = trim($dados["categoria"]);
+$preco = filter_var($dados["preco"], FILTER_VALIDATE_FLOAT);
+$ativo = (int) $dados["ativo"];
 
-$cadastrarServico->bindParam(":nome_servico", $dados["nome_servico"], PDO::PARAM_STR);
-$cadastrarServico->bindParam(":preco", $dados["preco"], PDO::PARAM_STR);
-$cadastrarServico->bindParam(":ativo", $dados["ativo"], PDO::PARAM_STR);
-$cadastrarServico->bindParam(":categoria", $dados["categoria"], PDO::PARAM_STR);
+if (
+    $nome === "" ||
+    $categoria === "" ||
+    $preco === false ||
+    !is_finite($preco) ||
+    $preco < 0 ||
+    strlen($nome) > 50 ||
+    strlen($categoria) > 50
+) {
+    http_response_code(400);
 
-$cadastrarServico->execute();
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Nome, categoria ou preço inválido"
+    ]);
+    exit();
+}
 
-$resposta = [
-    "sucesso" => true,
-    "mensagem" => "Serviço cadastrado com sucesso"
-];
+try {
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Servico.php";
 
-echo json_encode($resposta);
+    $database = new Database();
+    $pdo = $database->conectar();
+
+    $servico = new Servico($pdo);
+
+    $idServico = $servico->cadastrarServico(
+        $nome,
+        $preco,
+        $ativo,
+        $categoria
+    );
+
+    http_response_code(201);
+
+    echo json_encode([
+        "sucesso" => true,
+        "mensagem" => "Serviço cadastrado com sucesso",
+        "id_servico" => $idServico
+    ]);
+
+} catch (PDOException $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao cadastrar serviço"
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro interno ao cadastrar serviço"
+    ]);
+}

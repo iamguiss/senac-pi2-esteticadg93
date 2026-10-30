@@ -2,38 +2,42 @@
 
 session_start();
 
+header("Content-Type: application/json; charset=UTF-8");
+
 if (!isset($_SESSION["id_user"])) {
+    http_response_code(401);
+
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Usuario nao esta logado"
+        "mensagem" => "Usuário não está logado"
     ]);
     exit();
 }
+
 $idUsuario = $_SESSION["id_user"];
 
-require_once "../config/conexao.php";
+try {
+    require_once "../config/conexao.php";
+    require_once "../models/Agendamento.php";
 
-$database = new Database();
-$pdo = $database->conectar();
+    $database = new Database();
+    $pdo = $database->conectar();
 
+    $meusAgendamentos = new Agendamento($pdo);
+    $agendados = $meusAgendamentos->consultarMeusAgendamento($idUsuario);
 
-$consultarAgendamento = $pdo->prepare(
-    "SELECT 
-    agendamento.id_agendamento, 
-    usuarios.nome, servicos.nome_servico, 
-    servicos.preco, agendamento.status,
-    agendamento.data, 
-    agendamento.hora, 
-    agendamento.local 
-    FROM agendamento 
-    JOIN usuarios ON agendamento.id_user = usuarios.id_user 
-    JOIN servicos ON agendamento.id_service = servicos.id_service
-    WHERE agendamento.id_user = :id_user"
-);
+    http_response_code(200);
 
-$consultarAgendamento->bindParam(":id_user", $idUsuario, PDO::PARAM_INT);
-$consultarAgendamento->execute();
+    echo json_encode([
+        "sucesso" => true,
+        "agendamentos" => $agendados
+    ]);
 
-$agendamentos = $consultarAgendamento->fetchAll(PDO::FETCH_ASSOC);
+} catch (Exception $e) {
+    http_response_code(500);
 
-echo json_encode($agendamentos);
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao consultar os agendamentos"
+    ]);
+}

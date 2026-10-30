@@ -1,45 +1,98 @@
+
 <?php
 
 session_start();
 
-require_once "../config/conexao.php";
+header("Content-Type: application/json; charset=UTF-8");
 
-$database = new Database();
-$pdo = $database->conectar();
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
 
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Este endpoint aceita apenas POST"
+    ]);
+    exit();
+}
+
+if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
+    http_response_code(401);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Usuário não está logado"
+    ]);
+    exit();
+}
+
+if ($_SESSION["perfil"] !== "admin") {
+    http_response_code(403);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Acesso negado"
+    ]);
+    exit();
+}
 
 $entrada = file_get_contents("php://input");
 $dados = json_decode($entrada, true);
 
-if (!isset($_SESSION["perfil"])) {
+if (!is_array($dados) || !isset($dados["id_user"])) {
+    http_response_code(400);
+
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Usuario não está logado"
+        "mensagem" => "ID do cliente inválido"
     ]);
     exit();
 }
 
-$perfil = $_SESSION["perfil"];
+$idUsuario = filter_var($dados["id_user"], FILTER_VALIDATE_INT);
 
-if ($perfil === "admin") {
-    $consultarCliente = $pdo->prepare(
-        "SELECT id_user, nome, email, cpf, sexo, perfil
-        FROM usuarios
-        WHERE id_user = :id_user
-        AND perfil = 'cliente'
-        "
-    );
-    $consultarCliente->execute([
-        ":id_user" => $dados["id_user"]
-    ]);
+if (!$idUsuario || $idUsuario <= 0) {
+    http_response_code(400);
 
-    $cliente = $consultarCliente->fetch(PDO::FETCH_ASSOC);
-} else {
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Acesso negado. Você não tem permissão para acessar esta página."
+        "mensagem" => "ID do cliente inválido"
     ]);
     exit();
 }
 
-echo json_encode($cliente);
+try {
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Usuario.php";
+
+    $database = new Database();
+    $pdo = $database->conectar();
+
+    $usuario = new Usuario($pdo);
+
+    $cliente = $usuario->buscarDetalhesCliente($idUsuario);
+
+    if (!$cliente) {
+        http_response_code(404);
+
+        echo json_encode([
+            "sucesso" => false,
+            "mensagem" => "Cliente não encontrado"
+        ]);
+        exit();
+    }
+
+    http_response_code(200);
+
+    echo json_encode([
+        "sucesso" => true,
+        "cliente" => $cliente
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao consultar cliente"
+    ]);
+}

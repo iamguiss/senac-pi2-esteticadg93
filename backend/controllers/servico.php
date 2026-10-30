@@ -1,21 +1,31 @@
+
 <?php
 
-require_once "../config/conexao.php";
-require_once "../models/Servico.php";
+header("Content-Type: application/json; charset=UTF-8");
 
+try {
+    require_once "../config/conexao.php";
+    require_once "../models/Servico.php";
 
-$database = new Database();
+    $database = new Database();
+    $pdo = $database->conectar();
 
-$pdo = $database->conectar();
+    $consultar = new Servico($pdo);
+    $servicos = $consultar->listarTodos();
 
-$consultar = new Servico($pdo);
-$servicos = $consultar->listarTodos();
+    http_response_code(200);
 
-$resposta = [
-    "sucesso" => true,
-    "mensagem" => "Serviços recebidos com sucesso",
-    "servicos" => $servicos
-];
+    echo json_encode([
+        "sucesso" => true,
+        "mensagem" => "Serviços recebidos com sucesso",
+        "servicos" => $servicos
+    ]);
 
-echo json_encode($resposta);
+} catch (Exception $e) {
+    http_response_code(500);
 
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao consultar os serviços"
+    ]);
+}

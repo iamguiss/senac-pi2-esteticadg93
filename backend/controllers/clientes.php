@@ -1,37 +1,51 @@
 <?php
+
 session_start();
 
-require_once "../config/conexao.php";
+header("Content-Type: application/json; charset=UTF-8");
 
-$database = new Database();
-$pdo = $database->conectar();
+if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
+    http_response_code(401);
 
-
-if (!isset($_SESSION["perfil"])) {
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Usuario não está logado"
+        "mensagem" => "Usuário não está logado"
     ]);
     exit();
 }
 
-$perfil = $_SESSION["perfil"];
+if ($_SESSION["perfil"] !== "admin") {
+    http_response_code(403);
 
-if ($perfil === "admin") {
-    $consultarCliente = $pdo->prepare(
-        "SELECT id_user, nome, email, cpf, sexo, perfil
-        FROM usuarios WHERE perfil = 'cliente' 
-        "
-    );
-    $consultarCliente->execute();
-    $clientes = $consultarCliente->fetchAll(PDO::FETCH_ASSOC);
-
-} else {
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Acesso negado. Você não tem permissão para acessar esta página."
+        "mensagem" => "Acesso negado"
     ]);
     exit();
 }
 
-echo json_encode($clientes);
+try {
+    require_once "../config/conexao.php";
+    require_once "../models/Usuario.php";
+
+    $database = new Database();
+    $pdo = $database->conectar();
+
+    $usuario = new Usuario($pdo);
+    $clientes = $usuario->listarClientes();
+
+    http_response_code(200);
+
+    echo json_encode([
+        "sucesso" => true,
+        "clientes" => $clientes
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao consultar os clientes"
+    ]);
+}

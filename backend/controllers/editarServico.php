@@ -1,17 +1,23 @@
+
 <?php
 
 session_start();
 
-require_once "../config/conexao.php";
+header("Content-Type: application/json; charset=UTF-8");
 
-$database = new Database();
-$pdo = $database->conectar();
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
 
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Este endpoint aceita apenas POST"
+    ]);
+    exit();
+}
 
-$entrada = file_get_contents("php://input");
-$dados = json_decode($entrada, true);;
+if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
+    http_response_code(401);
 
-if (!isset($_SESSION["perfil"])) {
     echo json_encode([
         "sucesso" => false,
         "mensagem" => "Usuário não está logado"
@@ -19,48 +25,123 @@ if (!isset($_SESSION["perfil"])) {
     exit();
 }
 
-$perfil = $_SESSION["perfil"];
+if ($_SESSION["perfil"] !== "admin") {
+    http_response_code(403);
 
-if ($perfil === "admin") {
-
-    $nome_servico = $dados["nome_servico"];
-    $preco = $dados["preco"];
-    $categoria = $dados["categoria"];
-    $id_service = $dados["id_service"];
-
-
-    $editarServico = $pdo->prepare(
-        "UPDATE servicos
-        SET nome_servico = :nome_servico,
-            preco = :preco,
-            categoria = :categoria
-        WHERE id_service = :id_service
-        "
-    );
-    $editarServico->execute([
-        "nome_servico" => $nome_servico,
-        "preco" => $preco,
-        "categoria" => $categoria,
-        "id_service" => $id_service
-    ]);
-
-    if ($editarServico->rowCount() > 0) {
-        $resposta = [
-            "sucesso" => true,
-            "mensagem" => "Serviço alterado"
-        ];
-    } else {
-        $resposta = [
-            "sucesso" => false,
-            "mensagem" => "Não foi possível editar o serviço"
-        ];
-    }
-} else {
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Acesso negado. Você não tem permissão para acessar esta página."
+        "mensagem" => "Acesso negado"
     ]);
     exit();
 }
 
-echo json_encode($resposta);
+$entrada = file_get_contents("php://input");
+$dados = json_decode($entrada, true);
+
+if (
+    !is_array($dados) ||
+    !isset(
+        $dados["id_service"],
+        $dados["nome_servico"],
+        $dados["preco"],
+        $dados["categoria"]
+    )
+) {
+    http_response_code(400);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Dados incompletos ou inválidos"
+    ]);
+    exit();
+}
+
+if (
+    !is_string($dados["nome_servico"]) ||
+    !is_string($dados["categoria"]) ||
+    (!is_string($dados["preco"]) && !is_numeric($dados["preco"]))
+) {
+    http_response_code(400);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Verifique os dados informados"
+    ]);
+    exit();
+}
+
+$idService = filter_var($dados["id_service"], FILTER_VALIDATE_INT);
+$nome = trim($dados["nome_servico"]);
+$categoria = trim($dados["categoria"]);
+$preco = filter_var($dados["preco"], FILTER_VALIDATE_FLOAT);
+
+if (
+    !$idService ||
+    $idService <= 0 ||
+    $nome === "" ||
+    $categoria === "" ||
+    $preco === false ||
+    !is_finite($preco) ||
+    $preco < 0 ||
+    strlen($nome) > 50 ||
+    strlen($categoria) > 50
+) {
+    http_response_code(400);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Dados inválidos para editar o serviço"
+    ]);
+    exit();
+}
+
+try {
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Servico.php";
+
+    $database = new Database();
+    $pdo = $database->conectar();
+
+    $servicoEditar = new Servico($pdo);
+
+    $resultado = $servicoEditar->editarServico(
+        $idService,
+        $nome,
+        $preco,
+        $categoria
+    );
+
+    if (!$resultado) {
+        http_response_code(404);
+
+        echo json_encode([
+            "sucesso" => false,
+            "mensagem" => "Serviço não encontrado ou nenhuma alteração realizada"
+        ]);
+        exit();
+    }
+
+    http_response_code(200);
+
+    echo json_encode([
+        "sucesso" => true,
+        "mensagem" => "Serviço editado com sucesso",
+        "id_servico" => $idService
+    ]);
+
+} catch (PDOException $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao editar serviço"
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro interno ao editar serviço"
+    ]);
+}

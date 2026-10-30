@@ -1,25 +1,30 @@
+
 <?php
+
 session_start();
 
-if (isset($_SESSION["id_user"])) {
-    $resposta = [
+header("Content-Type: application/json; charset=UTF-8");
+
+if (isset($_SESSION["id_user"], $_SESSION["perfil"])) {
+
+    $mensagem = $_SESSION["perfil"] === "admin"
+        ? "Sessão ativa como administrador"
+        : "Sessão ativa como usuário";
+
+    http_response_code(200);
+
+    echo json_encode([
         "sucesso" => true,
-        "mensagem" => "Sessão ativa",
+        "mensagem" => $mensagem,
         "id_user" => $_SESSION["id_user"],
         "perfil" => $_SESSION["perfil"]
-    ];
+    ]);
 
-    if ($_SESSION["perfil"] === "admin") {
-        $resposta["mensagem"] = "Sessão ativa como administrador";
-    } else {
-        $resposta["mensagem"] = "Sessão ativa como usuário";
-    }
 } else {
+    http_response_code(401);
 
-    $resposta = [
+    echo json_encode([
         "sucesso" => false,
         "mensagem" => "Sessão não ativa"
-    ];
+    ]);
 }
-
-echo json_encode($resposta);

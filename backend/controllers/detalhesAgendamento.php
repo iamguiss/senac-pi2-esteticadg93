@@ -1,38 +1,81 @@
 <?php
 
 session_start();
-require_once "../config/conexao.php";
 
-$database = new Database();
-$pdo = $database->conectar();
+header("Content-Type: application/json; charset=UTF-8");
 
-$idUsuario = $_SESSION["id_user"];
+if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
+    http_response_code(401);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Usuário não está logado"
+    ]);
+    exit();
+}
+
+if ($_SESSION["perfil"] !== "admin") {
+    http_response_code(403);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Acesso negado"
+    ]);
+    exit();
+}
 
 $entrada = file_get_contents("php://input");
 $dados = json_decode($entrada, true);
 
-$idAgendamento = $dados["id_agendamento"];
+if (
+    !is_array($dados) ||
+    !isset($dados["id_user"]) ||
+    filter_var($dados["id_user"], FILTER_VALIDATE_INT) === false ||
+    (int) $dados["id_user"] <= 0
+) {
+    http_response_code(400);
 
-$consultarAgendamento = $pdo->prepare(
-    "SELECT 
-    agendamento.id_agendamento, 
-    usuarios.nome, servicos.nome_servico, 
-    servicos.preco, agendamento.status,
-    agendamento.data, 
-    agendamento.hora, 
-    agendamento.local 
-    FROM agendamento 
-    JOIN usuarios ON agendamento.id_user = usuarios.id_user 
-    JOIN servicos ON agendamento.id_service = servicos.id_service
-    WHERE agendamento.id_agendamento = :id_agendamento 
-    AND agendamento.id_user = :id_user"
-);
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "ID do cliente inválido"
+    ]);
+    exit();
+}
 
-$consultarAgendamento->bindParam(":id_agendamento", $idAgendamento);
-$consultarAgendamento->bindParam(":id_user", $idUsuario);
+$idCliente = (int) $dados["id_user"];
 
-$consultarAgendamento->execute();
+try {
+    require_once "../config/conexao.php";
+    require_once "../models/Usuario.php";
 
-$agendamento  = $consultarAgendamento->fetch(PDO::FETCH_ASSOC);    
+    $database = new Database();
+    $pdo = $database->conectar();
 
-echo json_encode($agendamento);
+    $usuario = new Usuario($pdo);
+    $cliente = $usuario->buscarDetalhesCliente($idCliente);
+
+    if (!$cliente) {
+        http_response_code(404);
+
+        echo json_encode([
+            "sucesso" => false,
+            "mensagem" => "Cliente não encontrado"
+        ]);
+        exit();
+    }
+
+    http_response_code(200);
+
+    echo json_encode([
+        "sucesso" => true,
+        "cliente" => $cliente
+    ]);
+
+} catch (Exception $e) {
+    http_response_code(500);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Erro ao consultar os dados do cliente"
+    ]);
+}

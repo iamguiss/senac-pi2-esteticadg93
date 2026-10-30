@@ -1,12 +1,8 @@
-
 <?php
 
 session_start();
 
 header("Content-Type: application/json; charset=UTF-8");
-
-require_once "../config/conexao.php";
-require_once "../models/Agendamento.php";
 
 if (!isset($_SESSION["perfil"], $_SESSION["id_user"])) {
     http_response_code(401);
@@ -21,18 +17,24 @@ if (!isset($_SESSION["perfil"], $_SESSION["id_user"])) {
 $entrada = file_get_contents("php://input");
 $dados = json_decode($entrada, true);
 
-if (!is_array($dados) || !isset($dados["id_agendamento"])) {
+if (
+    !is_array($dados) ||
+    !isset($dados["id_agendamento"]) ||
+    filter_var($dados["id_agendamento"], FILTER_VALIDATE_INT) === false ||
+    (int) $dados["id_agendamento"] <= 0
+) {
     http_response_code(400);
 
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "ID do agendamento não informado"
+        "mensagem" => "ID do agendamento inválido"
     ]);
     exit();
 }
 
 $idUsuario = $_SESSION["id_user"];
 $perfil = $_SESSION["perfil"];
+$idAgendamento = (int) $dados["id_agendamento"];
 
 if ($perfil !== "cliente" && $perfil !== "admin") {
     http_response_code(403);
@@ -45,6 +47,9 @@ if ($perfil !== "cliente" && $perfil !== "admin") {
 }
 
 try {
+    require_once "../config/conexao.php";
+    require_once "../models/Agendamento.php";
+
     $database = new Database();
     $pdo = $database->conectar();
 
@@ -53,24 +58,26 @@ try {
     $resultado = $agendamento->cancelarAgendamento(
         $perfil,
         $idUsuario,
-        (int) $dados["id_agendamento"]
+        $idAgendamento
     );
 
     if ($resultado) {
-        $resposta = [
+        http_response_code(200);
+
+        echo json_encode([
             "sucesso" => true,
             "mensagem" => "Agendamento cancelado com sucesso"
-        ];
+        ]);
     } else {
-        $resposta = [
+        http_response_code(400);
+
+        echo json_encode([
             "sucesso" => false,
             "mensagem" => "Não foi possível cancelar o agendamento"
-        ];
+        ]);
     }
 
-    echo json_encode($resposta);
-
-} catch (PDOException $e) {
+} catch (Exception $e) {
     http_response_code(500);
 
     echo json_encode([
@@ -78,4 +85,3 @@ try {
         "mensagem" => "Erro ao cancelar o agendamento"
     ]);
 }
-echo json_encode($resposta);
