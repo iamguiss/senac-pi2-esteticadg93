@@ -25,16 +25,6 @@ if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
     exit();
 }
 
-if ($_SESSION["perfil"] !== "admin") {
-    http_response_code(403);
-
-    echo json_encode([
-        "sucesso" => false,
-        "mensagem" => "Acesso negado"
-    ]);
-    exit();
-}
-
 $entrada = file_get_contents("php://input");
 $dados = json_decode($entrada, true);
 
@@ -50,12 +40,32 @@ if (!is_array($dados) || !isset($dados["id_user"])) {
 
 $idUsuario = filter_var($dados["id_user"], FILTER_VALIDATE_INT);
 
-if (!$idUsuario || $idUsuario <= 0) {
+if ($idUsuario === false || $idUsuario <= 0) {
     http_response_code(400);
 
     echo json_encode([
         "sucesso" => false,
         "mensagem" => "ID do cliente inválido"
+    ]);
+    exit();
+}
+
+if ($_SESSION["perfil"] === "cliente" && $idUsuario != $_SESSION["id_user"]) {
+    http_response_code(403);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Você não pode consultar os dados de outro cliente"
+    ]);
+    exit();
+}
+
+if ($_SESSION["perfil"] !== "admin" && $_SESSION["perfil"] !== "cliente") {
+    http_response_code(403);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Perfil sem permissão"
     ]);
     exit();
 }

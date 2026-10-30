@@ -241,30 +241,40 @@ class Agendamento
         return $consulta->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
     public function detalhesAgendamentos($id_user, $id_agendamento)
     {
-        $consulta = $this->pdo->prepare(
-            "SELECT
-                agendamento.id_agendamento,
-                usuarios.nome,
-                servicos.nome_servico,
-                servicos.preco,
-                agendamento.status,
-                agendamento.data,
-                agendamento.hora,
-                agendamento.local
-            FROM agendamento
-            JOIN usuarios ON agendamento.id_user = usuarios.id_user
-            JOIN servicos ON agendamento.id_service = servicos.id_service
-            WHERE agendamento.id_agendamento = :id_agendamento
-            AND agendamento.id_user = :id_user"
-        );
-
-        $consulta->execute([
-            ":id_user" => $id_user,
+        $sql = "SELECT
+                    agendamento.id_agendamento,
+                    usuarios.nome,
+                    servicos.nome_servico,
+                    servicos.preco,
+                    agendamento.status,
+                    agendamento.data,
+                    agendamento.hora,
+                    agendamento.local
+                FROM agendamento
+                JOIN usuarios ON agendamento.id_user = usuarios.id_user
+                JOIN servicos ON agendamento.id_service = servicos.id_service
+                WHERE agendamento.id_agendamento = :id_agendamento";
+    
+        if ($id_user !== null) {
+            $sql .= " AND agendamento.id_user = :id_user";
+        }
+    
+        $consulta = $this->pdo->prepare($sql);
+    
+        $parametros = [
             ":id_agendamento" => $id_agendamento
-        ]);
-
+        ];
+    
+        if ($id_user !== null) {
+            $parametros[":id_user"] = $id_user;
+        }
+    
+        $consulta->execute($parametros);
+    
         return $consulta->fetch(PDO::FETCH_ASSOC);
     }
+    
 }

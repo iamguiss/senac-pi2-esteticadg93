@@ -1,8 +1,19 @@
+
 <?php
 
 session_start();
 
 header("Content-Type: application/json; charset=UTF-8");
+
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    http_response_code(405);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Este endpoint aceita apenas GET"
+    ]);
+    exit();
+}
 
 if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
     http_response_code(401);
@@ -14,52 +25,42 @@ if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
     exit();
 }
 
-if ($_SESSION["perfil"] !== "admin") {
-    http_response_code(403);
+$idAgendamento = filter_input(INPUT_GET, "id_agendamento", FILTER_VALIDATE_INT);
 
-    echo json_encode([
-        "sucesso" => false,
-        "mensagem" => "Acesso negado"
-    ]);
-    exit();
-}
-
-$entrada = file_get_contents("php://input");
-$dados = json_decode($entrada, true);
-
-if (
-    !is_array($dados) ||
-    !isset($dados["id_user"]) ||
-    filter_var($dados["id_user"], FILTER_VALIDATE_INT) === false ||
-    (int) $dados["id_user"] <= 0
-) {
+if (!$idAgendamento || $idAgendamento <= 0) {
     http_response_code(400);
 
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "ID do cliente inválido"
+        "mensagem" => "ID do agendamento inválido"
     ]);
     exit();
 }
 
-$idCliente = (int) $dados["id_user"];
-
 try {
-    require_once "../config/conexao.php";
-    require_once "../models/Usuario.php";
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Agendamento.php";
 
     $database = new Database();
     $pdo = $database->conectar();
 
-    $usuario = new Usuario($pdo);
-    $cliente = $usuario->buscarDetalhesCliente($idCliente);
+    $agendamentoModel = new Agendamento($pdo);
 
-    if (!$cliente) {
+    $idUsuario = $_SESSION["perfil"] === "admin"
+        ? null
+        : $_SESSION["id_user"];
+
+    $agendamento = $agendamentoModel->detalhesAgendamentos(
+        $idUsuario,
+        $idAgendamento
+    );
+
+    if (!$agendamento) {
         http_response_code(404);
 
         echo json_encode([
             "sucesso" => false,
-            "mensagem" => "Cliente não encontrado"
+            "mensagem" => "Agendamento não encontrado"
         ]);
         exit();
     }
@@ -68,7 +69,7 @@ try {
 
     echo json_encode([
         "sucesso" => true,
-        "cliente" => $cliente
+        "agendamento" => $agendamento
     ]);
 
 } catch (Exception $e) {
@@ -76,6 +77,6 @@ try {
 
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Erro ao consultar os dados do cliente"
+        "mensagem" => "Erro ao consultar agendamento"
     ]);
 }
