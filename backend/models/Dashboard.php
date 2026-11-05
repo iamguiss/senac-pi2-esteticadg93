@@ -1,4 +1,3 @@
-```php
 <?php
 
 class Dashboard
@@ -10,18 +9,62 @@ class Dashboard
         $this->pdo = $pdo;
     }
 
+
     public function consultarAdmin()
     {
         $sql = "SELECT
-            (SELECT COUNT(*) FROM usuarios WHERE perfil = 'cliente') AS total_clientes,
-            (SELECT COUNT(*) FROM servicos WHERE ativo = 1) AS total_servicos,
+            (SELECT COUNT(*)
+             FROM usuarios
+             WHERE perfil = 'cliente') AS total_clientes,
+
+            (SELECT COUNT(*)
+             FROM servicos
+             WHERE ativo = 1) AS total_servicos,
+
             COUNT(*) AS total_agendamentos,
-            SUM(CASE WHEN status = 'AGUARDANDO_CONFIRMACAO' THEN 1 ELSE 0 END) AS total_aguardando_confirmacao,
-            SUM(CASE WHEN status = 'APROVADO' THEN 1 ELSE 0 END) AS total_aprovados,
-            SUM(CASE WHEN status = 'EM_ANDAMENTO' THEN 1 ELSE 0 END) AS total_em_andamento,
-            SUM(CASE WHEN status = 'CONCLUIDO' THEN 1 ELSE 0 END) AS total_concluidos,
-            SUM(CASE WHEN status = 'NEGADO' THEN 1 ELSE 0 END) AS total_negados,
-            SUM(CASE WHEN status = 'CANCELADO' THEN 1 ELSE 0 END) AS total_cancelados
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'AGUARDANDO_CONFIRMACAO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_aguardando_confirmacao,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'APROVADO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_aprovados,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'EM_ANDAMENTO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_em_andamento,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'CONCLUIDO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_concluidos,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'NEGADO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_negados,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'CANCELADO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_cancelados
+
             FROM agendamento";
 
         $consulta = $this->pdo->query($sql);
@@ -33,9 +76,49 @@ class Dashboard
     {
         $sql = "SELECT
             COUNT(*) AS total_agendamentos,
-            SUM(CASE WHEN status = 'AGUARDANDO_CONFIRMACAO' THEN 1 ELSE 0 END) AS total_aguardando_confirmacao,
-            SUM(CASE WHEN status = 'EM_ANDAMENTO' THEN 1 ELSE 0 END) AS total_em_andamento,
-            SUM(CASE WHEN status = 'CONCLUIDO' THEN 1 ELSE 0 END) AS total_concluidos
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'AGUARDANDO_CONFIRMACAO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_aguardando_confirmacao,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'APROVADO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_aprovados,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'EM_ANDAMENTO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_em_andamento,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'CONCLUIDO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_concluidos,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'NEGADO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_negados,
+
+            COALESCE(SUM(
+                CASE
+                    WHEN status = 'CANCELADO'
+                    THEN 1 ELSE 0
+                END
+            ), 0) AS total_cancelados
+
             FROM agendamento
             WHERE id_user = :id_user";
 
