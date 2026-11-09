@@ -1,4 +1,3 @@
-
 <?php
 
 session_start();
@@ -113,6 +112,17 @@ try {
     $pdo = $database->conectar();
 
     $consultar = new Agendamento($pdo);
+
+    if (!$consultar->verificarServicoAtivo($idService)) {
+        http_response_code(404);
+
+        echo json_encode([
+            "sucesso" => false,
+            "mensagem" => "Serviço inexistente ou indisponível"
+        ]);
+
+        exit();
+    }
 
     $horarioOcupado = $consultar->verificarHorario(
         $data,
