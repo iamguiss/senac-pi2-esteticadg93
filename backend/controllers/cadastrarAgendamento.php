@@ -73,13 +73,14 @@ if (
         (int) substr($data, 5, 2),
         (int) substr($data, 8, 2),
         (int) substr($data, 0, 4)
-    )
+    ) ||
+    $data < date("Y-m-d")
 ) {
     http_response_code(400);
 
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "Data inválida"
+        "mensagem" => "Data inválida ou passada"
     ]);
     exit();
 }
