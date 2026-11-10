@@ -207,44 +207,39 @@ class Agendamento
 
     public function statusAtual($id_agendamento, $novoStatus)
     {
+        $transicoes = [
+            "AGUARDANDO_CONFIRMACAO" => ["APROVADO", "NEGADO", "CANCELADO"],
+            "APROVADO" => ["EM_ANDAMENTO", "CANCELADO"],
+            "EM_ANDAMENTO" => ["CONCLUIDO", "CANCELADO"]
+        ];
+
         $statusAtual = $this->consultarStatus($id_agendamento);
 
         if (!$statusAtual) {
             return false;
         }
 
-        switch ($statusAtual["status"]) {
-            case "AGUARDANDO_CONFIRMACAO":
-                if (
-                    $novoStatus === "APROVADO" ||
-                    $novoStatus === "NEGADO" ||
-                    $novoStatus === "CANCELADO"
-                ) {
-                    return $this->alterarStatus($novoStatus, $id_agendamento);
-                }
-                break;
+        $statusAnterior = $statusAtual["status"];
 
-            case "APROVADO":
-                if (
-                    $novoStatus === "EM_ANDAMENTO" ||
-                    $novoStatus === "CANCELADO"
-                ) {
-                    return $this->alterarStatus($novoStatus, $id_agendamento);
-                }
-                break;
-
-            case "EM_ANDAMENTO":
-                if (
-                    $novoStatus === "CONCLUIDO" ||
-                    $novoStatus === "CANCELADO"
-                ) {
-                    return $this->alterarStatus($novoStatus, $id_agendamento);
-                }
-                break;
+        if (!isset($transicoes[$statusAnterior]) || !in_array($novoStatus, $transicoes[$statusAnterior], true)) {
+            return false;
         }
 
-        return false;
+        $sql = "UPDATE agendamento
+                SET status = :novo_status
+                WHERE id_agendamento = :id_agendamento
+                AND status = :status_anterior";
+
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute([
+            ":novo_status" => $novoStatus,
+            ":id_agendamento" => $id_agendamento,
+            ":status_anterior" => $statusAnterior
+        ]);
+
+        return $stmt->rowCount() > 0;
     }
+
 
     public function consultarMeusAgendamento($id_user)
     {
