@@ -25,8 +25,8 @@ if (!isset($_SESSION["id_user"])) {
 }
 
 try {
-    require_once "../config/conexao.php";
-    require_once "../models/Agendamento.php";
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Agendamento.php";
 
     $entrada = file_get_contents("php://input");
     $dados = json_decode($entrada, true);
