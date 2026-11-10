@@ -1,5 +1,3 @@
-DROP DATABASE estetica_dg93;
-
 CREATE DATABASE IF NOT EXISTS estetica_dg93;
 
 USE estetica_dg93;
