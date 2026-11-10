@@ -4,6 +4,16 @@ session_start();
 
 header("Content-Type: application/json; charset=UTF-8");
 
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Método não permitido"
+    ]);
+    exit();
+}
+
 if (!isset($_SESSION["perfil"], $_SESSION["id_user"])) {
     http_response_code(401);
 
@@ -32,7 +42,7 @@ if (
     exit();
 }
 
-$idUsuario = $_SESSION["id_user"];
+$idUsuario = (int) $_SESSION["id_user"];
 $perfil = $_SESSION["perfil"];
 $idAgendamento = (int) $dados["id_agendamento"];
 

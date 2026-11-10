@@ -1,4 +1,3 @@
-
 <?php
 
 class Servico
@@ -32,41 +31,53 @@ class Servico
                 (nome_servico, preco, ativo, categoria)
                 VALUES
                 (:nome_servico, :preco, :ativo, :categoria)";
-    
+
         $cadastrar = $this->pdo->prepare($sql);
-    
+
         $cadastrar->bindParam(":nome_servico", $nome_servico, PDO::PARAM_STR);
         $cadastrar->bindParam(":preco", $preco, PDO::PARAM_STR);
         $cadastrar->bindParam(":ativo", $ativo, PDO::PARAM_INT);
         $cadastrar->bindParam(":categoria", $categoria, PDO::PARAM_STR);
-    
+
         $cadastrar->execute();
-    
+
         return $this->pdo->lastInsertId();
     }
-    
+
 
 
     public function editarServico($id_service, $nome_servico, $preco, $categoria)
     {
         $sql = "UPDATE servicos
-                SET nome_servico = :nome_servico,
-                    preco = :preco,
-                    categoria = :categoria
-                WHERE id_service = :id_service";
-    
+            SET nome_servico = :nome_servico,
+                preco = :preco,
+                categoria = :categoria
+            WHERE id_service = :id_service";
+
         $editar = $this->pdo->prepare($sql);
-    
+
         $editar->execute([
             ":id_service" => $id_service,
             ":nome_servico" => $nome_servico,
             ":preco" => $preco,
             ":categoria" => $categoria
         ]);
-    
-        return $editar->rowCount() > 0;
+
+        if ($editar->rowCount() > 0) {
+            return true;
+        }
+
+        $consulta = $this->pdo->prepare(
+            "SELECT id_service FROM servicos WHERE id_service = :id_service"
+        );
+
+        $consulta->execute([
+            ":id_service" => $id_service
+        ]);
+
+        return $consulta->fetchColumn() !== false;
     }
-     
+
 
     public function alternarStatus($id_service)
     {

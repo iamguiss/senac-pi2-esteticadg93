@@ -89,31 +89,26 @@ class Agendamento
 
     public function cancelarAgendamento($perfil, $id_user, $id_agendamento)
     {
-        try {
-            $sql = "UPDATE agendamento
-                    SET status = 'CANCELADO'
-                    WHERE id_agendamento = :id_agendamento
-                    AND status IN ('AGUARDANDO_CONFIRMACAO', 'APROVADO')";
+        $sql = "UPDATE agendamento
+            SET status = 'CANCELADO'
+            WHERE id_agendamento = :id_agendamento
+            AND status IN ('AGUARDANDO_CONFIRMACAO', 'APROVADO')";
 
-            if ($perfil !== "admin") {
-                $sql .= " AND id_user = :id_user";
-            }
-
-            $stmt = $this->pdo->prepare($sql);
-
-            $stmt->bindValue(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
-
-            if ($perfil !== "admin") {
-                $stmt->bindValue(":id_user", $id_user, PDO::PARAM_INT);
-            }
-
-            $stmt->execute();
-
-            return $stmt->rowCount() > 0;
-
-        } catch (PDOException $e) {
-            return false;
+        if ($perfil !== "admin") {
+            $sql .= " AND id_user = :id_user";
         }
+
+        $stmt = $this->pdo->prepare($sql);
+
+        $stmt->bindValue(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+
+        if ($perfil !== "admin") {
+            $stmt->bindValue(":id_user", $id_user, PDO::PARAM_INT);
+        }
+
+        $stmt->execute();
+
+        return $stmt->rowCount() > 0;
     }
 
 
@@ -143,22 +138,44 @@ class Agendamento
     public function remarcarAgendamento($data, $hora, $id_agendamento, $id_user)
     {
         $sql = "UPDATE agendamento
-                SET data = :data,
-                    hora = :hora
-                WHERE id_agendamento = :id_agendamento
-                AND id_user = :id_user
-                AND status NOT IN ('CANCELADO', 'NEGADO', 'CONCLUIDO', 'EM_ANDAMENTO')";
+            SET data = :data,
+                hora = :hora
+            WHERE id_agendamento = :id_agendamento
+            AND id_user = :id_user
+            AND status NOT IN ('CANCELADO', 'NEGADO', 'CONCLUIDO', 'EM_ANDAMENTO')";
 
         $stmt = $this->pdo->prepare($sql);
 
-        $stmt->bindParam(":data", $data, PDO::PARAM_STR);
-        $stmt->bindParam(":hora", $hora, PDO::PARAM_STR);
-        $stmt->bindParam(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
-        $stmt->bindParam(":id_user", $id_user, PDO::PARAM_INT);
+        $stmt->bindValue(":data", $data, PDO::PARAM_STR);
+        $stmt->bindValue(":hora", $hora, PDO::PARAM_STR);
+        $stmt->bindValue(":id_agendamento", $id_agendamento, PDO::PARAM_INT);
+        $stmt->bindValue(":id_user", $id_user, PDO::PARAM_INT);
 
         $stmt->execute();
 
-        return $stmt->rowCount() > 0;
+        if ($stmt->rowCount() > 0) {
+            return true;
+        }
+
+        $sqlVerificar = "SELECT 1
+                     FROM agendamento
+                     WHERE id_agendamento = :id_agendamento
+                     AND id_user = :id_user
+                     AND data = :data
+                     AND TIME_FORMAT(hora, '%H:%i') = :hora
+                     AND status NOT IN ('CANCELADO', 'NEGADO', 'CONCLUIDO', 'EM_ANDAMENTO')
+                     LIMIT 1";
+
+        $verificar = $this->pdo->prepare($sqlVerificar);
+
+        $verificar->execute([
+            ":id_agendamento" => $id_agendamento,
+            ":id_user" => $id_user,
+            ":data" => $data,
+            ":hora" => $hora
+        ]);
+
+        return $verificar->fetchColumn() !== false;
     }
 
 

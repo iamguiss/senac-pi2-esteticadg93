@@ -4,6 +4,16 @@ session_start();
 
 header("Content-Type: application/json; charset=UTF-8");
 
+if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+    http_response_code(405);
+
+    echo json_encode([
+        "sucesso" => false,
+        "mensagem" => "Método não permitido"
+    ]);
+    exit();
+}
+
 if (!isset($_SESSION["id_user"])) {
     http_response_code(401);
 
@@ -43,7 +53,7 @@ try {
     $hora = $dados["hora"];
 
     if (
-        !$idAgendamento ||
+        $idAgendamento === false ||
         $idAgendamento <= 0 ||
         !is_string($data) ||
         !is_string($hora)
@@ -69,6 +79,16 @@ try {
         echo json_encode([
             "sucesso" => false,
             "mensagem" => "Data ou horário inválido"
+        ]);
+        exit();
+    }
+
+    if ($data < date("Y-m-d")) {
+        http_response_code(400);
+
+        echo json_encode([
+            "sucesso" => false,
+            "mensagem" => "Não é permitido remarcar para uma data passada"
         ]);
         exit();
     }
