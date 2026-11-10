@@ -89,12 +89,18 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit();
 }
 
-if (strlen($senha) < 8) {
+if ($nome === "" || strlen($nome) > 50 || count(array_filter(explode(" ", $nome))) < 2) {
+    http_response_code(400);
+    echo json_encode(["sucesso" => false, "mensagem" => "Informe nome e sobrenome"]);
+    exit();
+}
+
+if (strlen($senha) < 8 || strlen($senha) > 72) {
     http_response_code(400);
 
     echo json_encode([
         "sucesso" => false,
-        "mensagem" => "A senha deve possuir pelo menos 8 caracteres"
+        "mensagem" => "A senha deve possuir entre 8 e 72 caracteres"
     ]);
     exit();
 }
@@ -109,7 +115,7 @@ if (!validarCPF($cpf)) {
     exit();
 }
 
-if ($sexo !== null && !is_string($sexo)) {
+if ($sexo !== null && (!is_string($sexo) || strlen($sexo) > 13)) {
     http_response_code(400);
 
     echo json_encode([
