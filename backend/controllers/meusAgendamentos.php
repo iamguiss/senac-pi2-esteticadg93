@@ -4,13 +4,25 @@ session_start();
 
 header("Content-Type: application/json; charset=UTF-8");
 
-if (!isset($_SESSION["id_user"])) {
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    http_response_code(405);
+    echo json_encode(["sucesso" => false, "mensagem" => "Este endpoint aceita apenas GET"]);
+    exit();
+}
+
+if (!isset($_SESSION["id_user"], $_SESSION["perfil"])) {
     http_response_code(401);
 
     echo json_encode([
         "sucesso" => false,
         "mensagem" => "Usuário não está logado"
     ]);
+    exit();
+}
+
+if (!in_array($_SESSION["perfil"], ["cliente", "admin"], true)) {
+    http_response_code(403);
+    echo json_encode(["sucesso" => false, "mensagem" => "Acesso negado"]);
     exit();
 }
 
