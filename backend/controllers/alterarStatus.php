@@ -83,8 +83,8 @@ if (
 }
 
 try {
-    require_once "../config/conexao.php";
-    require_once "../models/Agendamento.php";
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Agendamento.php";
 
     $database = new Database();
     $pdo = $database->conectar();
