@@ -46,7 +46,11 @@ class Usuario
         $stmt->bindValue(":email", $email, PDO::PARAM_STR);
         $stmt->bindValue(":senha", $senhaHash, PDO::PARAM_STR);
         $stmt->bindValue(":cpf", $cpf, PDO::PARAM_STR);
-        $stmt->bindValue(":sexo", $sexo, PDO::PARAM_STR);
+        if ($sexo === null || $sexo === "") {
+            $stmt->bindValue(":sexo", null, PDO::PARAM_NULL);
+        } else {
+            $stmt->bindValue(":sexo", $sexo, PDO::PARAM_STR);
+        }
         $stmt->bindValue(":perfil", $perfil, PDO::PARAM_STR);
 
         $stmt->execute();
