@@ -49,8 +49,8 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 }
 
 try {
-    require_once "../config/conexao.php";
-    require_once "../models/Usuario.php";
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Usuario.php";
 
     $database = new Database();
     $pdo = $database->conectar();
