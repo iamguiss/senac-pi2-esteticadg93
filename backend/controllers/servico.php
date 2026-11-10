@@ -3,9 +3,15 @@
 
 header("Content-Type: application/json; charset=UTF-8");
 
+if ($_SERVER["REQUEST_METHOD"] !== "GET") {
+    http_response_code(405);
+    echo json_encode(["sucesso" => false, "mensagem" => "Este endpoint aceita apenas GET"]);
+    exit();
+}
+
 try {
-    require_once "../config/conexao.php";
-    require_once "../models/Servico.php";
+    require_once __DIR__ . "/../config/conexao.php";
+    require_once __DIR__ . "/../models/Servico.php";
 
     $database = new Database();
     $pdo = $database->conectar();
